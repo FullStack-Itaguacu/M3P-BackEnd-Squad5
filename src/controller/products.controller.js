@@ -1,16 +1,9 @@
-//const { sign } = require('jsonwebtoken');
-//const dotenv = require('dotenv');
-//dotenv.config();
-//const { Users  } = require('../models/users')
-// As linhas acima devem ser ativadas quando o DB estiver diponível
-
 //const { checkBody } = require('../services/checkBody')
 
-class UsersController{
-    async loginUser(request, response) {
+class ProductsController{
+    async creaateProduct(request, response) {
         try {          
-            console.log('teste de login')    
-            return response.status(200).send({'msg':'--- loginUser ---',
+            return response.status(200).send({'msg':'--- creaateProduct ---',
                                               'body': request.body  });
         } catch (error) {
             return response.status(400).send({
@@ -21,9 +14,9 @@ class UsersController{
     }
 
     //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
-    async createOneUser(request, response){
+    async listProductsByAdmin(request, response){
         try {
-            return response.status(201).send({'msg':'--- createOneUser ---'})
+            return response.status(201).send({'msg':'--- listProducts ---'})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -33,9 +26,9 @@ class UsersController{
     }
 
     // Atualizar usuário - comprador para usuário - admin  
-    async updateUser(request, response) {
+    async listProductsById(request, response) {
         try {
-            return response.status(201).send({'msg':'--- ipdateUser ---'})
+            return response.status(201).send({'msg':'--- listProductsById ---'})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -44,10 +37,20 @@ class UsersController{
         }
     }
 
-    // Para atualização de senha
-    async changePassword(request,response){
+    async listProducts(request, response) {
         try {
-            return response.status(201).send({'msg': '--- changePassword ---'})
+            return response.status(201).send({'msg':'--- listProducts ---'})
+        } catch (error) {
+            return response.status(400).send({
+                msg: "Erro enviado do banco de dados",
+                error: error.message
+            })
+        }
+    }
+
+    async updateProductsByAdminById(request, response) {
+        try {
+            return response.status(201).send({'msg':'--- updateProductsById ---'})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -57,4 +60,4 @@ class UsersController{
     }
 }
 
-module.exports = new UsersController()
+module.exports = new ProductsController()

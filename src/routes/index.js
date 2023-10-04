@@ -4,8 +4,11 @@ const { Router } = require('express')
 
 const routes = new Router()
 const { routesFromUser } = require('./users.routers')
+const { routesFromBuyers } = require('./buyers.routers')
+const { routesFromProducts } = require('./products.routers')
 
-routes.use('/api', [routesFromUser])
+routes.use('/api', [routesFromUser(), routesFromBuyers(), routesFromProducts()])
+
 
 // Exportação do objeto routes para uso no server.js
 module.exports = routes

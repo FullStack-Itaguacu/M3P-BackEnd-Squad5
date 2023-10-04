@@ -1,16 +1,9 @@
-//const { sign } = require('jsonwebtoken');
-//const dotenv = require('dotenv');
-//dotenv.config();
-//const { Users  } = require('../models/users')
-// As linhas acima devem ser ativadas quando o DB estiver diponível
-
 //const { checkBody } = require('../services/checkBody')
 
-class UsersController{
-    async loginUser(request, response) {
+class BuyersController{
+    async listBuyers(request, response) {
         try {          
-            console.log('teste de login')    
-            return response.status(200).send({'msg':'--- loginUser ---',
+            return response.status(200).send({'msg':'--- listBuyers ---',
                                               'body': request.body  });
         } catch (error) {
             return response.status(400).send({
@@ -21,9 +14,9 @@ class UsersController{
     }
 
     //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
-    async createOneUser(request, response){
+    async listBuyersById(request, response){
         try {
-            return response.status(201).send({'msg':'--- createOneUser ---'})
+            return response.status(201).send({'msg':'--- listBuyersById ---'})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -33,7 +26,7 @@ class UsersController{
     }
 
     // Atualizar usuário - comprador para usuário - admin  
-    async updateUser(request, response) {
+    async updateBuyerById(request, response) {
         try {
             return response.status(201).send({'msg':'--- ipdateUser ---'})
         } catch (error) {
@@ -43,18 +36,6 @@ class UsersController{
             })
         }
     }
-
-    // Para atualização de senha
-    async changePassword(request,response){
-        try {
-            return response.status(201).send({'msg': '--- changePassword ---'})
-        } catch (error) {
-            return response.status(400).send({
-                msg: "Erro enviado do banco de dados",
-                error: error.message
-            })
-        }
-    }
 }
 
-module.exports = new UsersController()
+module.exports = new BuyersController()
