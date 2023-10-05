@@ -36,14 +36,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      endereco_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: { tableName: "enderecos" },
-          key: "id",
-        },
-        allowNull: false,
-      },
       criado_por: {
         type: Sequelize.INTEGER,
         references: {
