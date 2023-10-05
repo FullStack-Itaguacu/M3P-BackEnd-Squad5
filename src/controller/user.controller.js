@@ -8,10 +8,8 @@
 
 class UsersController{
     async loginUser(request, response) {
-        try {          
-            console.log('teste de login')    
-            return response.status(200).send({'msg':'--- loginUser ---',
-                                              'body': request.body  });
+        try {           
+            return response.status(200).send({'msg':'--- loginUser ---', 'endpoint': request.url});
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -23,7 +21,7 @@ class UsersController{
     //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
     async createOneUser(request, response){
         try {
-            return response.status(201).send({'msg':'--- createOneUser ---'})
+            return response.status(201).send({'msg':'--- createOneUser ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -35,7 +33,7 @@ class UsersController{
     // Atualizar usuário - comprador para usuário - admin  
     async updateUser(request, response) {
         try {
-            return response.status(201).send({'msg':'--- ipdateUser ---'})
+            return response.status(201).send({'msg':'--- ipdateUser ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -47,7 +45,7 @@ class UsersController{
     // Para atualização de senha
     async changePassword(request,response){
         try {
-            return response.status(201).send({'msg': '--- changePassword ---'})
+            return response.status(201).send({'msg': '--- changePassword ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",

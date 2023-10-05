@@ -3,8 +3,7 @@
 class BuyersController{
     async listBuyers(request, response) {
         try {          
-            return response.status(200).send({'msg':'--- listBuyers ---',
-                                              'body': request.body  });
+            return response.status(200).send({'msg':'--- listBuyers ---', 'endpoint': request.url  });
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -16,7 +15,7 @@ class BuyersController{
     //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
     async listBuyersById(request, response){
         try {
-            return response.status(201).send({'msg':'--- listBuyersById ---'})
+            return response.status(201).send({'msg':'--- listBuyersById ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -28,7 +27,7 @@ class BuyersController{
     // Atualizar usuário - comprador para usuário - admin  
     async updateBuyerById(request, response) {
         try {
-            return response.status(201).send({'msg':'--- ipdateUser ---'})
+            return response.status(201).send({'msg':'--- ipdateUser ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",

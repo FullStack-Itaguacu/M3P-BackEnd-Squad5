@@ -28,7 +28,7 @@ class ProductsController{
     // Atualizar usuário - comprador para usuário - admin  
     async listProductsById(request, response) {
         try {
-            return response.status(201).send({'msg':'--- listProductsById ---'})
+            return response.status(201).send({'msg':'--- listProductsById ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -39,7 +39,7 @@ class ProductsController{
 
     async listProducts(request, response) {
         try {
-            return response.status(201).send({'msg':'--- listProducts ---'})
+            return response.status(201).send({'msg':'--- listProducts ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
@@ -50,7 +50,7 @@ class ProductsController{
 
     async updateProductsByAdminById(request, response) {
         try {
-            return response.status(201).send({'msg':'--- updateProductsById ---'})
+            return response.status(201).send({'msg':'--- updateProductsById ---', 'endpoint': request.url})
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
