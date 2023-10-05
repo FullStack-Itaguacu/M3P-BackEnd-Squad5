@@ -5,7 +5,7 @@ const { auth } = require('../middleware/auth')
 class ProductsRouter{
     routesFromProducts () {
         const productsRoutes  = Router()
-        productsRoutes.post(' /products/admin', creaateProduct)
+        productsRoutes.post('/products/admin', creaateProduct)
         productsRoutes.get('/products/admin', listProductsByAdmin)
         productsRoutes.get('/products/:offset/:limit', listProducts)
         productsRoutes.get('/products/:productId', listProductsById)
