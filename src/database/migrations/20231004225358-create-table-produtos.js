@@ -42,7 +42,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      criado_por: {
+      user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "usuarios" },
