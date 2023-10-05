@@ -5,10 +5,19 @@ const Usuario = connection.define("usuario", {
   full_name: {
     type: STRING,
     allowNull: false,
+    validate: {
+      notNull: {
+        msg: "O campo nome é obrigatório!",
+      },
+    },
   },
   cpf: {
     type: STRING,
+    allowNull: false,
     validate: {
+      notNull: {
+        msg: "O campo nome do laboratório é obrigatório!",
+      },
       len: {
         args: [11, 11],
         msg: "CPF deve ter exatamente 11 caracteres.",
@@ -17,12 +26,14 @@ const Usuario = connection.define("usuario", {
     unique: {
       msg: "CPF já cadastrado",
     },
-    allowNull: false,
   },
   birth_date: {
     type: DATE,
     allowNull: false,
     validate: {
+      notNull: {
+        msg: "O campo data de nascimento é obrigatório!",
+      },
       customValidator(value) {
         if (new Date(value) < new Date()) {
           throw new Error("Data de nascimento inválida");
@@ -33,6 +44,9 @@ const Usuario = connection.define("usuario", {
   email: {
     type: STRING,
     validate: {
+      notNull: {
+        msg: "O campo e-mail é obrigatório!",
+      },
       isEmail: { msg: "Endereço de e-mail inválido" },
     },
     allowNull: false,
@@ -41,10 +55,18 @@ const Usuario = connection.define("usuario", {
   phone: {
     type: STRING,
     allowNull: true,
+    validate: {
+      notNull: {
+        msg: "O campo telefone é obrigatório",
+      },
+    },
   },
   password: {
     type: STRING,
     validate: {
+      notNull: {
+        msg: "O campo senha é obrigatório",
+      },
       is: {
         args: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[@$!%*#?~(&)+=^_-]).{8,}/,
         msg: "Senha deve conter no mínimo 8 caracteres, com uma letra maiúscula, uma letra minúscula e um digíto",
@@ -54,6 +76,11 @@ const Usuario = connection.define("usuario", {
   },
   endereco_id: {
     type: INTEGER,
+    validate: {
+      notNull: {
+        msg: "O campo id do endereço é obrigatório",
+      },
+    },
     references: {
       model: Endereco,
       key: "id",
@@ -72,6 +99,15 @@ const Usuario = connection.define("usuario", {
     type: ENUM(["administrador", "comprador"]),
     allowNull: false,
     defaultValue: "comprador",
+    validate: {
+      notNull: {
+        msg: "O campo tipo de usuário é obrigatório",
+      },
+      isIn: {
+        args: ["administrador", "comprador"],
+        msg: "O campo somente recebe 'administrador' e 'comprador'",
+      },
+    },
   },
 });
 
