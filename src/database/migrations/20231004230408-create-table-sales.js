@@ -41,7 +41,7 @@ module.exports = {
       users_addresses_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios_enderecos" },
+          model: { tableName: "users_addresses" },
           key: "id",
         },
         allowNull: false,
