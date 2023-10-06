@@ -3,14 +3,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("usuarios", {
+    await queryInterface.createTable("users", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      full_name: {
+      fullName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -19,7 +19,7 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      birth_date: {
+      birthDate: {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
@@ -36,7 +36,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      criado_por: {
+      createdBy: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "usuarios" },
@@ -44,25 +44,26 @@ module.exports = {
         },
         allowNull: true,
       },
-      type_user: {
+      typeUser: {
         type: Sequelize.ENUM(["administrador", "comprador"]),
         allowNull: false,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
+        allowNull: true
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("usuarios");
+    await queryInterface.dropTable("users");
   },
 };

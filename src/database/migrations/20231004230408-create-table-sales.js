@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("vendas", {
+    await queryInterface.createTable("seles", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -13,7 +13,7 @@ module.exports = {
       buyer_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios" },
+          model: { tableName: "users" },
           key: "id",
         },
         allowNull: false,
@@ -21,7 +21,7 @@ module.exports = {
       seller_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios" },
+          model: { tableName: "users" },
           key: "id",
         },
         allowNull: false,
@@ -29,12 +29,12 @@ module.exports = {
       product_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "produtos" },
+          model: { tableName: "products" },
           key: "id",
         },
         allowNull: false,
       },
-      amount_buy: {
+      amountBuy: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -50,7 +50,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      type_payment: {
+      typePayment: {
         type: Sequelize.ENUM(
           "credito",
           "debito",
@@ -59,21 +59,22 @@ module.exports = {
           "transferencia"
         ),
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
+        allowNull: true
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("vendas");
+    await queryInterface.dropTable("seles");
   },
 };
