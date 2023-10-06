@@ -42,10 +42,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios" },
+          model: { tableName: "users" },
           key: "id",
         },
         allowNull: true,
