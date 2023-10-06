@@ -3,14 +3,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("enderecos", {
+    await queryInterface.createTable("addresses", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      cep: {
+      zip: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      number_street: {
+      numberStreet: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -56,11 +56,12 @@ module.exports = {
       },
       deleted_at: {
         type: Sequelize.DATE,
+        allowNull: true
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("enderecos");
+    await queryInterface.dropTable("addresses");
   },
 };

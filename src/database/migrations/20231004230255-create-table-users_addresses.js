@@ -3,44 +3,44 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("usuarios_enderecos", {
+    await queryInterface.createTable("usersAddresses", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      usuario_id: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios" },
+          model: { tableName: "users" },
           key: "id",
         },
         allowNull: false,
       },
-      endereco_id: {
+      addressId: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "enderecos" },
+          model: { tableName: "addresses" },
           key: "id",
         },
         allowNull: false,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("usuarios_enderecos");
+    await queryInterface.dropTable("usersAddresses");
   },
 };
