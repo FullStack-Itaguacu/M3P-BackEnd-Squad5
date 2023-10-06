@@ -1,7 +1,8 @@
 const { connection } = require("../database/connection");
 const { STRING, DATE, INTEGER, ENUM } = require("sequelize");
+const { Address } = require("./address");
 
-const Usuario = connection.define("usuario", {
+const User = connection.define("user", {
   full_name: {
     type: STRING,
     allowNull: false,
@@ -74,19 +75,6 @@ const Usuario = connection.define("usuario", {
     },
     allowNull: false,
   },
-  endereco_id: {
-    type: INTEGER,
-    validate: {
-      notNull: {
-        msg: "O campo id do endereço é obrigatório",
-      },
-    },
-    references: {
-      model: Endereco,
-      key: "id",
-    },
-    allowNull: false,
-  },
   criado_por: {
     type: INTEGER,
     allowNull: true,
@@ -111,4 +99,7 @@ const Usuario = connection.define("usuario", {
   },
 });
 
-module.exports = { Usuario };
+User.belongsToMany(Address, { through: "users_addresses" });
+Address.belongsToMany(User, { through: "users_addresses" });
+
+module.exports = { User };

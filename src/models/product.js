@@ -1,8 +1,8 @@
 const { connection } = require("../database/connection");
 const { STRING, INTEGER, ENUM, DECIMAL } = require("sequelize");
-const { Usuario } = require("./usuario");
+const { User } = require("./user");
 
-const Produto = connection.define("produto", {
+const Product = connection.define("product", {
   name: {
     type: STRING,
     allowNull: false,
@@ -85,7 +85,7 @@ const Produto = connection.define("produto", {
   user_id: {
     type: INTEGER,
     references: {
-      model: Usuario,
+      model: User,
       key: "id",
     },
     allowNull: true,
@@ -95,4 +95,7 @@ const Produto = connection.define("produto", {
   },
 });
 
-module.exports = { Produto };
+Product.belongsTo(User);
+User.hasMany(Product);
+
+module.exports = { Product };

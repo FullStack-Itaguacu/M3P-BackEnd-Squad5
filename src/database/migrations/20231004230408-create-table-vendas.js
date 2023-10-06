@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("vendas", {
+    await queryInterface.createTable("sales", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -13,7 +13,7 @@ module.exports = {
       buyer_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios" },
+          model: { tableName: "users" },
           key: "id",
         },
         allowNull: false,
@@ -21,7 +21,7 @@ module.exports = {
       seller_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios" },
+          model: { tableName: "users" },
           key: "id",
         },
         allowNull: false,
@@ -29,7 +29,7 @@ module.exports = {
       product_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "produtos" },
+          model: { tableName: "products" },
           key: "id",
         },
         allowNull: false,
@@ -41,7 +41,7 @@ module.exports = {
       users_addresses_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usuarios_enderecos" },
+          model: { tableName: "users_addresses" },
           key: "id",
         },
         allowNull: false,
@@ -74,6 +74,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("vendas");
+    await queryInterface.dropTable("sales");
   },
 };
