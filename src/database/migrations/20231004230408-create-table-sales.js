@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      buyer_id: {
+      buyerId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -18,7 +18,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      seller_id: {
+      sellerId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -26,7 +26,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      product_id: {
+      productId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "products" },
@@ -38,10 +38,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      users_addresses_id: {
+      usersAddressesId: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "users_addresses" },
+          model: { tableName: "usersAddresses" },
           key: "id",
         },
         allowNull: false,

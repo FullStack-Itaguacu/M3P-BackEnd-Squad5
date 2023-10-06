@@ -3,14 +3,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users_addresses", {
+    await queryInterface.createTable("usersAddresses", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -18,7 +18,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      address_id: {
+      addressId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "addresses" },
@@ -41,6 +41,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users_addresses");
+    await queryInterface.dropTable("usersAddresses");
   },
 };
