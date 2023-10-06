@@ -36,7 +36,7 @@ const Address = connection.define(
         }
       },
     },
-    number_street: {
+    numberStreet: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {

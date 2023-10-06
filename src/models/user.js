@@ -3,7 +3,7 @@ const { STRING, DATE, INTEGER, ENUM } = require("sequelize");
 const { Address } = require("./address");
 
 const User = connection.define("user", {
-  full_name: {
+  fullName: {
     type: STRING,
     allowNull: false,
     validate: {
@@ -28,7 +28,7 @@ const User = connection.define("user", {
       msg: "CPF já cadastrado",
     },
   },
-  birth_date: {
+  birthDate: {
     type: DATE,
     allowNull: false,
     validate: {
@@ -75,7 +75,7 @@ const User = connection.define("user", {
     },
     allowNull: false,
   },
-  criado_por: {
+  criadoPor: {
     type: INTEGER,
     allowNull: true,
     references: {
@@ -83,7 +83,7 @@ const User = connection.define("user", {
       key: "id",
     },
   },
-  type_user: {
+  typeUser: {
     type: ENUM(["administrador", "comprador"]),
     allowNull: false,
     defaultValue: "comprador",

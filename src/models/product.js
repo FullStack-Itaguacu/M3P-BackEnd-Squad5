@@ -12,7 +12,7 @@ const Product = connection.define("product", {
       },
     },
   },
-  lab_name: {
+  labName: {
     type: STRING,
     allowNull: false,
     validate: {
@@ -21,7 +21,7 @@ const Product = connection.define("product", {
       },
     },
   },
-  image_link: {
+  imageLink: {
     type: STRING,
     allowNull: false,
     validate: {
@@ -43,7 +43,7 @@ const Product = connection.define("product", {
     type: STRING,
     allowNull: true,
   },
-  unit_price: {
+  unitPrice: {
     type: DECIMAL(10, 2),
     allowNull: false,
     validate: {
@@ -56,7 +56,7 @@ const Product = connection.define("product", {
       },
     },
   },
-  type_product: {
+  typeProduct: {
     type: ENUM(["controlado", "não controlado"]),
     allowNull: false,
     validate: {
@@ -69,7 +69,7 @@ const Product = connection.define("product", {
       },
     },
   },
-  total_estoque: {
+  totalEstoque: {
     type: INTEGER,
     allowNull: false,
     validate: {
@@ -82,7 +82,7 @@ const Product = connection.define("product", {
       },
     },
   },
-  user_id: {
+  userId: {
     type: INTEGER,
     references: {
       model: User,
