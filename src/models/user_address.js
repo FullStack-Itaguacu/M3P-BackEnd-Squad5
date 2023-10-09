@@ -15,6 +15,12 @@ const User_address = connection.define("user_address",{
             key: "id",
         },
             allowNull: false,
+        validate: {
+            isInt: {
+                    msg: 'O ID do usuário precisar ser numérico.' },
+            notEmpty: {
+                    msg: "O ID do usuário precisa ser informado." }
+            }
     },
     address_id: {
         type: Sequelize.INTEGER,
@@ -23,6 +29,12 @@ const User_address = connection.define("user_address",{
             key: "id",
         },
         allowNull: false,
+        validate: {
+            isInt: {
+                    msg: 'O ID do endereço precisar ser numérico.' },
+            notEmpty: {
+                    msg: "O ID do endereço precisa ser informado." }
+            }
     },
     createdAt: {
         type: Sequelize.DATE,
