@@ -3,14 +3,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("seles", {
+    await queryInterface.createTable("sales", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      buyerId: {
+      buyer_id: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -18,7 +18,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      sellerId: {
+      seller_id: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -26,7 +26,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      productId: {
+      product_id: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "products" },
@@ -34,14 +34,14 @@ module.exports = {
         },
         allowNull: false,
       },
-      amountBuy: {
+      amount_buy: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      usersAddressesId: {
+      users_addresses_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "usersAddresses" },
+          model: { tableName: "users_addresses" },
           key: "id",
         },
         allowNull: false,
@@ -50,7 +50,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      typePayment: {
+      type_payment: {
         type: Sequelize.ENUM(
           "credito",
           "debito",
@@ -59,22 +59,22 @@ module.exports = {
           "transferencia"
         ),
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("seles");
+    await queryInterface.dropTable("sales");
   },
 };

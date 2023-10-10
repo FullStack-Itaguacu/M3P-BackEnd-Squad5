@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      fullName: {
+      full_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -19,7 +19,7 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      birthDate: {
+      birth_date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
@@ -36,7 +36,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      createdBy: {
+      created_by: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -44,21 +44,21 @@ module.exports = {
         },
         allowNull: true,
       },
-      typeUser: {
+      type_user: {
         type: Sequelize.ENUM(["administrador", "comprador"]),
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
     });
   },
