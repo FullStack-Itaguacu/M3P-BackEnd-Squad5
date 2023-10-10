@@ -92,6 +92,6 @@ const User = connection.define("user", {
     type: Sequelize.DATE,
     allowNull: false,
   }
-},{ underscored: true, paranoid: true });
+},{ underscored: false, paranoid: true });
 
 module.exports = { User };
