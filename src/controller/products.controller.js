@@ -3,6 +3,7 @@ const { Product } = require("../models/product");
 class ProductsController {
   async createProduct(request, response) {
     try {
+      console.log(request.payload);
       const isAdmin = request.payload.administrador;
       if (isAdmin == "N") {
         return response.status(403).send({ msg: "Sem autorização de acesso" });
@@ -37,7 +38,6 @@ class ProductsController {
     } catch (error) {
       const statusCode = error.errors[0].message.status || 400;
       const message = error.errors[0].message.msg || error.message;
-      console.log(error.errors[0].message);
       return response.status(statusCode).send({
         msg: message,
       });
