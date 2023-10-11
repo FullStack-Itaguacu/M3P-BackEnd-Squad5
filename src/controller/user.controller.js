@@ -1,15 +1,57 @@
-//const { sign } = require('jsonwebtoken');
-//const dotenv = require('dotenv');
-//dotenv.config();
-//const { Users  } = require('../models/users')
-// As linhas acima devem ser ativadas quando o DB estiver diponível
+const { sign } = require('jsonwebtoken');
+const { config } = require('dotenv');
 
-//const { checkBody } = require('../services/checkBody')
+config();
+
+const { User  } = require('../models/user');
+
+let administrador = 'N';
 
 class UsersController{
     async loginUser(request, response) {
         try {           
-            return response.status(200).send({'msg':'--- loginUser ---', 'endpoint': request.url});
+            const { email, password } = request.body
+
+      if (!email) {
+        throw new Error("O email deve ser informado.")
+      }
+
+      if (!password) {
+        throw new Error("A senha deve ser informada.")
+      }
+
+      const usuario = await User.findOne({
+        where: {
+          email
+        }
+      })
+
+      if (!usuario) {
+        return response.status(404).send({ message: "Email do usuário não cadastrado" })
+      }
+
+      if (usuario.password !== password) {
+        throw new Error("Não foi possível realizar o login. Senha inválida.")
+      }
+
+      if (usuario.typeUser == "admnistrador") {
+          administrador = 'S'
+      } else {
+          administrador = 'N'
+      }
+
+      const payload = {
+        id : usuario.id,
+        email: email,
+        administrador: administrador
+      }
+
+      const token = sign(payload, process.env.jwt_secret_key, {
+        expiresIn: '2d'
+      })
+
+      return response.status(200).send({ token })
+
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",

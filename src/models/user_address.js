@@ -11,20 +11,32 @@ const User_address = connection.define(
       primaryKey: true,
     },
     user_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: { tableName: "users" },
-        key: "id",
-      },
-      allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+            model: { tableName: "users" },
+            key: "id",
+        },
+            allowNull: false,
+        validate: {
+            isInt: {
+                    msg: 'O ID do usuário precisar ser numérico.' },
+            notEmpty: {
+                    msg: "O ID do usuário precisa ser informado." }
+            }
     },
     address_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: { tableName: "addresses" },
-        key: "id",
-      },
-      allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+            model: { tableName: "addresses" },
+            key: "id",
+        },
+        allowNull: false,
+        validate: {
+            isInt: {
+                    msg: 'O ID do endereço precisar ser numérico.' },
+            notEmpty: {
+                    msg: "O ID do endereço precisa ser informado." }
+            }
     },
     createdAt: {
       type: Sequelize.DATE,
