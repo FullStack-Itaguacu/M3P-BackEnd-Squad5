@@ -49,6 +49,11 @@ const Product = connection.define("product", {
   }
   },
 
+  unitDosage: {
+    type: Sequelize.ENUM('mg', 'mcg', 'g', 'ml', '%', 'Outro'),
+    allowNull: false,
+  },
+
   description: {
     type: Sequelize.STRING,
     allowNull: true,
