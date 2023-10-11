@@ -5,6 +5,8 @@ config();
 
 const { User  } = require('../models/user');
 
+let administrador = 'N';
+
 class UsersController{
     async loginUser(request, response) {
         try {           
@@ -31,8 +33,17 @@ class UsersController{
       if (usuario.password !== password) {
         throw new Error("Não foi possível realizar o login. Senha inválida.")
       }
+
+      if (usuario.typeUser == "admnistrador") {
+          administrador = 'S'
+      } else {
+          administrador = 'N'
+      }
+
       const payload = {
-        email: email
+        id : usuario.id,
+        email: email,
+        administrador: administrador
       }
 
       const token = sign(payload, process.env.jwt_secret_key, {
