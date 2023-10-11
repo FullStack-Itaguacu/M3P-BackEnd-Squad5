@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      buyer_id: {
+      buyerId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -18,7 +18,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      seller_id: {
+      sellerId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -26,7 +26,7 @@ module.exports = {
         },
         allowNull: false,
       },
-      product_id: {
+      productId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "products" },
@@ -34,14 +34,14 @@ module.exports = {
         },
         allowNull: false,
       },
-      amount_buy: {
+      amountBuy: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      users_addresses_id: {
+      usersAddressesId: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "users_addresses" },
+          model: { tableName: "usersAddresses" },
           key: "id",
         },
         allowNull: false,
@@ -50,7 +50,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      type_payment: {
+      typePayment: {
         type: Sequelize.ENUM(
           "credito",
           "debito",
@@ -59,15 +59,15 @@ module.exports = {
           "transferencia"
         ),
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
       },

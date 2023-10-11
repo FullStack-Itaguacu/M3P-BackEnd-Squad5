@@ -1,57 +1,61 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
-const Address = connection.define("address",{
+const Address = connection.define(
+  "address",
+  {
     id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
     },
     zip: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+      type: Sequelize.INTEGER,
+      allowNull: false,
     },
     street: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     numberStreet: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     neighborhood: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     city: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     state: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     complement: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     lat: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     lon: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
-},{ underscored: true, paranoid: true });
+  },
+  { underscored: false, paranoid: true }
+);
 
 module.exports = { Address };

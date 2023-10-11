@@ -14,11 +14,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      lab_name: {
+      labName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      image_link: {
+      imageLink: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      dosage_unit: {
+      dosageUnit: {
         type: Sequelize.ENUM(["mg", "mcg", "g", "ml", "%", "Outro"]),
         allowNull: false,
       },
@@ -34,22 +34,22 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      unit_price: {
+      unitPrice: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      type_product: {
+      typeProduct: {
         type: Sequelize.ENUM([
           "Medicamento controlado",
           "Medicamento não controlado",
         ]),
         allowNull: false,
       },
-      total_stock: {
+      totalStock: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: { tableName: "users" },
@@ -57,15 +57,15 @@ module.exports = {
         },
         allowNull: true,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
       },

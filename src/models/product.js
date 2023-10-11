@@ -112,7 +112,7 @@ const Product = connection.define(
       allowNull: false,
     },
   },
-  { underscored: true, paranoid: true }
+  { underscored: false, paranoid: true }
 );
 
 module.exports = { Product };
