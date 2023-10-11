@@ -59,14 +59,27 @@ class ProductsController {
   // Atualizar usuário - comprador para usuário - admin
   async listProductsById(request, response) {
     try {
-      return response
-        .status(201)
-        .send({ msg: "--- listProductsById ---", endpoint: request.url });
+      const productId = request.params.productId;
+      const product = await ProductModel.findById(productId)
+
+      if(!product){
+        return response.status(404).send({
+          error: "Produto não encontrado.",
+          cause: error.message
+        })
+      }
+
+      //200 caso o produto existir.
+      return response.status(200).send(product);
     } catch (error) {
-      return response.status(400).send({
-        msg: "Erro enviado do banco de dados",
-        error: error.message,
-      });
+      console.error("Erro no endpoint /products/:productId:", error);
+
+      //Erro de autenticação
+      if(error.name === "AuthenticationError"){
+        return response.status(401).send({
+          error: "A autenticação é necessária para acessar este endpoint."
+        });
+      }
     }
   }
 
