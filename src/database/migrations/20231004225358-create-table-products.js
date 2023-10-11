@@ -26,8 +26,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      unitDosage: {
-        type: Sequelize.ENUM('mg', 'mcg', 'g', 'ml', '%', 'Outro'),
+      dosageUnit: {
+        type: Sequelize.ENUM(["mg", "mcg", "g", "ml", "%", "Outro"]),
         allowNull: false,
       },
       description: {
@@ -39,7 +39,10 @@ module.exports = {
         allowNull: false,
       },
       typeProduct: {
-        type: Sequelize.ENUM(["controlado", "não controlado"]),
+        type: Sequelize.ENUM([
+          "Medicamento controlado",
+          "Medicamento não controlado",
+        ]),
         allowNull: false,
       },
       totalStock: {
@@ -64,7 +67,7 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
     });
   },

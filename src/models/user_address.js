@@ -1,12 +1,14 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
-const User_address = connection.define("user_address",{
+const User_address = connection.define(
+  "user_address",
+  {
     id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
     },
     user_id: {
         type: Sequelize.INTEGER,
@@ -37,13 +39,15 @@ const User_address = connection.define("user_address",{
             }
     },
     createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
-},{ underscored: true, paranoid: true })
+  },
+  { underscored: false, paranoid: true }
+);
 
-module.exports = { User_address }
+module.exports = { User_address };
