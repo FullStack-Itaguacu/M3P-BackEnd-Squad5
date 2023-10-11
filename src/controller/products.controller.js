@@ -3,10 +3,10 @@ const { Product } = require("../models/product");
 class ProductsController {
   async createProduct(request, response) {
     try {
-      // const typeUser = request.payload.typeUser;
-      // if (typeUser != "administrador") {
-      //   return response.status(403).send({ msg: "Sem autorização de acesso" });
-      // }
+      const isAdmin = request.payload.administrador;
+      if (isAdmin == "N") {
+        return response.status(403).send({ msg: "Sem autorização de acesso" });
+      }
       const {
         name,
         labName,
@@ -18,7 +18,7 @@ class ProductsController {
         typeProduct,
         totalStock,
       } = request.body;
-      // const userId = request.payload.id;
+      const userId = request.payload.id;
       const data = await Product.create({
         name,
         labName,
@@ -29,7 +29,7 @@ class ProductsController {
         unitPrice,
         typeProduct,
         totalStock,
-        // userId,
+        userId,
       });
       return response
         .status(201)
