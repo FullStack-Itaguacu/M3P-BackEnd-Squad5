@@ -26,6 +26,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      dosage_unit: {
+        type: Sequelize.ENUM(["mg", "mcg", "g", "ml", "%", "Outro"]),
+        allowNull: false,
+      },
       description: {
         type: Sequelize.STRING,
         allowNull: true,

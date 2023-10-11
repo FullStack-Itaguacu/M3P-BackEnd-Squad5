@@ -14,18 +14,47 @@ const Product = connection.define(
     name: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: { msg: "Campo nome deve ser preenchido", status: "422" },
+        },
+      },
     },
     labName: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: {
+            msg: "Campo nome do laboratório deve ser preenchido",
+            status: "422",
+          },
+        },
+      },
     },
     imageLink: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: { msg: "Link da imagem deve ser preenchido", status: "422" },
+        },
+      },
     },
     dosage: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: { msg: "Dosagem deve ser preenchido", status: "422" } },
+      },
+    },
+    dosageUnit: {
+      type: Sequelize.ENUM("mg", "mcg", "g", "ml", "%", "Outro"),
+      allowNull: false,
+      isIn: {
+        args: [["mg", "mcg", "g", "ml", "%", "Outro"]],
+        msg: 'O campo somente recebe "mg", "mcg", "g", "ml", "%", "Outro"',
+      },
     },
     description: {
       type: Sequelize.STRING,
@@ -34,17 +63,37 @@ const Product = connection.define(
     unitPrice: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
+      validate: {
+        min: {
+          args: 0.01,
+          msg: "O valor mínimo é 0.01",
+        },
+        notNull: {
+          msg: { msg: "Preço unitário deve ser preenchido", status: "422" },
+        },
+      },
     },
     typeProduct: {
       type: Sequelize.ENUM([
         "Medicamento controlado",
         "Medicamento não controlado",
       ]),
+      isIn: {
+        args: [["Medicamento controlado", "Medicamento não controlado"]],
+        msg: "O campo somente recebe 'Medicamento controlado' e 'Medicamento não controlado'",
+      },
       allowNull: false,
     },
     totalStock: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: { msg: { msg: "Estoque deve ser preenchido", status: "422" } },
+        min: {
+          args: [0],
+          msg: "O estoque mínimo é 0",
+        },
+      },
     },
     userId: {
       type: Sequelize.INTEGER,

@@ -12,6 +12,7 @@ class ProductsController {
         labName,
         imageLink,
         dosage,
+        dosageUnit,
         description,
         unitPrice,
         typeProduct,
@@ -23,6 +24,7 @@ class ProductsController {
         labName,
         imageLink,
         dosage,
+        dosageUnit,
         description,
         unitPrice,
         typeProduct,
@@ -33,15 +35,11 @@ class ProductsController {
         .status(201)
         .send({ msg: "Produto criado com sucesso", body: data });
     } catch (error) {
-      if (error.errors[0].type == "notNull Violation") {
-        return response.status(422).send({
-          msg: "Campo obrigatório não preenchido",
-          error: error.message,
-        });
-      }
-      return response.status(400).send({
-        msg: "Erro enviado do banco de dados",
-        error: error.message,
+      const statusCode = error.errors[0].message.status || 400;
+      const message = error.errors[0].message.msg || error.message;
+      console.log(error.errors[0].message);
+      return response.status(statusCode).send({
+        msg: message,
       });
     }
   }
