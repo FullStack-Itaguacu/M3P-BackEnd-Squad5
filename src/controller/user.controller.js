@@ -6,6 +6,8 @@
 
 //const { checkBody } = require('../services/checkBody')
 
+const { User } = require("../models/user")
+
 class UsersController{
     async loginUser(request, response) {
         try {           
@@ -33,10 +35,10 @@ class UsersController{
     // Atualizar usuário - comprador para usuário - admin  
     async updateUser(request, response) {
         try {
-            const { id } = request.params
+            const { userId } = request.params
             const { fullName, email, cpf, phone, typeUser } = request.body
 
-            const user = await User.findByPk(id)
+            const user = await User.findByPk(userId)
 
             if (!user) {
                 return response.status(201).send({ message: "Usuário não pode ser encontrado!" })

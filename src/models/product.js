@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const { User } = require("./user");
 
 const Product = connection.define("product", {
-  id: {
+  productId: {
     type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,

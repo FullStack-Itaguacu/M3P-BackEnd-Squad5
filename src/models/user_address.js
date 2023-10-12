@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
 const User_address = connection.define("user_address",{
-    id: {
+    userAddressId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
