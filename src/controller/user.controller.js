@@ -33,7 +33,30 @@ class UsersController{
     // Atualizar usuário - comprador para usuário - admin  
     async updateUser(request, response) {
         try {
-            return response.status(201).send({'msg':'--- ipdateUser ---', 'endpoint': request.url})
+            const { id } = request.params
+            const { fullName, email, cpf, phone, typeUser } = request.body
+
+            const user = await User.findByPk(id)
+
+            if (!user) {
+                return response.status(201).send({ message: "Usuário não pode ser encontrado!" })
+            }
+
+            if (fullName) {
+                user.fullName = fullName
+            } if (email) {
+                user.email = email
+            } if (cpf) {
+                user.cpf = cpf
+            } if (phone) {
+                user.phone = phone
+            } if (typeUser) {
+                user.typeUser = typeUser
+            }
+
+            await User.save()
+
+            return response.status(201).send({ 'message': 'Dados atualizados com sucesso!' })
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
