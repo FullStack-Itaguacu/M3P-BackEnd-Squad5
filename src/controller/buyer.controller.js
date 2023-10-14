@@ -15,7 +15,35 @@ class BuyersController{
     //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
     async listBuyersById(request, response){
         try {
-            return response.status(201).send({'msg':'--- listBuyersById ---', 'endpoint': request.url})
+            const authenticatedUser = request.user;
+
+            if (!authenticatedUser){
+                return response.status(401).send({
+                    msg: "Acesso não autorizado. É necessário a autenticação."
+                })
+            }
+
+            if (authenticatedUser.typeUser !== "administrador"){
+                return response.status(403).send({
+                    msg: "Acesso não autorizado. Este endpoint é permitido para administradores."
+                });
+            }
+
+            //Obter o userId da rota
+            const userId = request.params.userId;
+            const product = await Product.findOne({
+                where:{
+                    userId: userId
+                }
+            });
+
+            if (!product){
+                return response.status(404).send({
+                    msg: "Produto não encontrado para usuário especificado."
+                })
+            }
+
+            return response.status(200).send(product);
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
