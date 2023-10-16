@@ -7,6 +7,7 @@
 //const { checkBody } = require('../services/checkBody')
 
 const { User } = require("../models/user")
+const { User_address } = require("../models/user_address")
 
 class UsersController{
     async loginUser(request, response) {
@@ -34,14 +35,21 @@ class UsersController{
 
     async listAddress(request, response) {
         try {
-            const { userId } = request.params
+            const { type } = request.query;
+            let list = {};
 
-            return response.status(201).send({ 'message': 'Dados atualizados com sucesso!' })
+            if (type) {
+                list = { type };
+            }
+
+            const userAddressData = await User_address.findAll({
+                where: list,
+            });
+
+            return response.status(200).send(userAddressData);
         } catch (error) {
-            return response.status(400).send({
-                msg: "Erro enviado do banco de dados",
-                error: error.message
-            })
+            console.log(error.message);
+            return response.status(400).send({ message: 'Não foi possível listar os endereços!' });
         }
     }
 

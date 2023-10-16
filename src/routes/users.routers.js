@@ -1,4 +1,4 @@
-const { loginUser, createOneUser, updateUser } = require('../controller/user.controller')
+const { loginUser, createOneUser, updateUser, listAddress } = require('../controller/user.controller')
 const { Router } = require('express')
 const { auth } = require('../middleware/auth')
 
@@ -9,7 +9,7 @@ class UserRouter{
         userRoutes.post('/user/signup', createOneUser)
         userRoutes.post('/user/admin/signup', createOneUser)
         userRoutes.patch('/buyers/admin/:userId', updateUser)
-        userRoutes.get('/buyers/admin/:userId', listAddress)
+        userRoutes.get('/buyers/address', listAddress)
         // para as rotas privadas deve ser usada a autenticação
         // deve ser considerado que apenas usuário adiministradores poderão usar a rota 
         // '/user/admin/signup'
