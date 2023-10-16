@@ -32,6 +32,19 @@ class UsersController{
         }        
     }
 
+    async listAddress(request, response) {
+        try {
+            const { userId } = request.params
+
+            return response.status(201).send({ 'message': 'Dados atualizados com sucesso!' })
+        } catch (error) {
+            return response.status(400).send({
+                msg: "Erro enviado do banco de dados",
+                error: error.message
+            })
+        }
+    }
+
     // Atualizar usuário - comprador para usuário - admin  
     async updateUser(request, response) {
         try {
