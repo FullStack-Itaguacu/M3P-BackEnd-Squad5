@@ -3,13 +3,6 @@ const { Sequelize } = require("sequelize");
 const { User } = require("./user");
 
 const Product = connection.define("product", {
-  id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -104,6 +97,10 @@ const Product = connection.define("product", {
     type: Sequelize.DATE,
     allowNull: false,
   },
-},{ underscored: true, paranoid: true });
+  deletedAt: {
+    type: Sequelize.DATE,
+    allowNull: true,
+},
+},{ underscored: false, paranoid: true });
 
 module.exports = { Product };

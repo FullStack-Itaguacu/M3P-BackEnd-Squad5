@@ -2,13 +2,7 @@ const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
 const Sale = connection.define("sale",{
-    id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    buyer_id: {
+    buyerId: {
         type: Sequelize.INTEGER,
         references: {
             model: { tableName: "users" },
@@ -24,7 +18,7 @@ const Sale = connection.define("sale",{
             }
         }
     },
-    seller_id: {
+    sellerId: {
         type: Sequelize.INTEGER,
         references: {
             model: { tableName: "users" },
@@ -40,7 +34,7 @@ const Sale = connection.define("sale",{
             }
         }
     },
-    product_id: {
+    productId: {
         type: Sequelize.INTEGER,
         references: {
             model: { tableName: "products" },
@@ -68,10 +62,10 @@ const Sale = connection.define("sale",{
             }
         }
     },
-    users_addresses_id: {
+    usersAddressesId: {
         type: Sequelize.INTEGER,
         references: {
-            model: { tableName: "usuariosEnderecos" },
+            model: { tableName: "users_addresses" },
             key: "id",
         },
         allowNull: false,
@@ -104,6 +98,10 @@ const Sale = connection.define("sale",{
     updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
+    },
+    deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
     },
 },{ underscored: true, paranoid: true });
 

@@ -1,13 +1,10 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
+const { User } = require('../models/user');
+const { User_Address } = require('./user_address');
+
 const Address = connection.define("address",{
-    id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-    },
     zip: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -88,6 +85,13 @@ const Address = connection.define("address",{
         type: Sequelize.DATE,
         allowNull: false,
     },
+    deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+    },
 },{ underscored: true, paranoid: true });
+
+Address.belongsToMany(User, { through: User_Address, as: 'users', foreignKey: 'addressId' });
+User.belongsToMany(Address, { through: User_Address, as: 'address', foreignKey: 'userId' });
 
 module.exports = { Address };
