@@ -47,11 +47,51 @@ class ProductsController {
   //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
   async listProductsByAdmin(request, response) {
     try {
-      return response.status(201).send({ msg: "--- listProducts ---" });
+      // Verifica se o usuário é ADMIN
+      const isAdmin = (request.payload.administrador === "S");
+      if (!isAdmin) {
+        return response.status(403).send({ msg: "Sem autorização de acesso" });
+      }
+      const { name, typeProduct, totalStock } = request.query;
+      const userId = request.payload.id;
+
+      let options = {
+        where: { userId },
+      };
+
+      if (name) {
+        options.where.name = { [Op.like]: `%${name}%` };
+      }
+
+      if (typeProduct) {
+        options.where.typeProduct = typeProduct;
+      }
+
+      if (totalStock) {
+        options.order = [["totalStock", totalStock === "asc" ? "ASC" : "DESC"]];
+      }
+
+      const products = await Product.findAll(options);
+
+      if (products.length > 0) {
+        return response.status(200).json(products);
+      } else {
+        return response.status(204).send();
+      }
     } catch (error) {
-      return response.status(400).send({
-        msg: "Erro enviado do banco de dados",
-        error: error.message,
+      console.error("Erro no endpoint /products/admin:", error);
+      if (error.name === "AuthenticationError") {
+        return response.status(401).send({
+          error: "A autenticação é necessária para acessar este endpoint.",
+        });
+      }
+      if (error.name === "AuthorizationError") {
+        return response.status(403).send({
+          error: "Acesso proibido. Somente usuários ADMIN podem acessar este endpoint.",
+        });
+      }
+      return response.status(500).send({
+        error: "Erro interno do servidor.",
       });
     }
   }
