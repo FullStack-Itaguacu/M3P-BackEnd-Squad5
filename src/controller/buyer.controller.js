@@ -1,5 +1,5 @@
 //const { checkBody } = require('../services/checkBody')
-const { User } = require("../models/user");
+const { Product } = require("../models/product");
 const { config } = require("dotenv");
 config();
 
@@ -15,7 +15,6 @@ class BuyersController{
             }
     }
 
-    //Servirá para criar usuário vendedor(admin) ou usuário comprador(user)
     async listBuyersById(request, response){
         try {
             const authenticatedUser = request.user;
@@ -69,7 +68,6 @@ class BuyersController{
     async listBuyerUsers(request, response) {
         const { offset, limit } = request.params;
         const { fullName, createdAt, sortOrder } = request.query;
-        const token = request.header('Authorization');
     
         try {
             if (request.payload.administrador !== 'S') {
