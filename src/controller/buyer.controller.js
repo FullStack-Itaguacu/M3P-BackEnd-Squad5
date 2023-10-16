@@ -1,4 +1,7 @@
 //const { checkBody } = require('../services/checkBody')
+const { User } = require("../models/user");
+const { config } = require("dotenv");
+config();
 
 class BuyersController{
     async listBuyers(request, response) {
@@ -61,6 +64,44 @@ class BuyersController{
                 msg: "Erro enviado do banco de dados",
                 error: error.message
             })
+        }
+    }
+    async listBuyerUsers(request, response) {
+        const { offset, limit } = request.params;
+        const { fullName, createdAt, sortOrder } = request.query;
+        const token = request.header('Authorization');
+    
+        try {
+            if (request.payload.administrador !== 'S') {
+                return response.status(403).send({ msg: 'Acesso negado. Somente administradores podem acessar este endpoint.' });
+            }
+    
+            let order = [['createdAt', 'ASC']]; 
+    
+            if (createdAt && ['asc', 'desc'].includes(sortOrder)) {
+                // Se sortOrder é 'asc' ou 'desc' e createdAt está presente nos query params
+                order = [['createdAt', sortOrder.toUpperCase()]]; // Define a ordem de acordo com os query params
+            }
+    
+            const users = await User.findAndCountAll({
+                where: {
+                    typeUser: 'comprador', // Filtra usuários do tipo BUYER
+                    fullName: {
+                        [Op.iLike]: `%${fullName || ''}%` // Filtra por nome (case-insensitive)
+                    }
+                },
+                order: order,
+                offset: parseInt(offset, 10),
+                limit: Math.min(20, parseInt(limit, 10)),
+            });
+    
+            if (users.count > 0) {
+                return response.status(200).send({ users: users.rows, totalCount: users.count });
+            } else {
+                return response.status(204).send({ msg: 'Não há usuários na base de dados.' });
+            }
+        } catch (error) {
+            return response.status(500).send({ msg: 'Erro interno do servidor', error: error.message });
         }
     }
 }
