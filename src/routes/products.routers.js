@@ -13,7 +13,7 @@ class ProductsRouter {
     const productsRoutes = Router();
     productsRoutes.post("/products/admin", auth, createProduct);
     productsRoutes.get("/products/admin", listProductsByAdmin);
-    productsRoutes.get("/products/:offset/:limit", listProducts);
+    productsRoutes.get("/products/:offset/:limit", auth, listProducts);
     productsRoutes.get("/products/:productId", listProductsById);
     productsRoutes.get("/products/admin/:productId", listProductsByAdmin);
     productsRoutes.patch(
