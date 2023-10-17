@@ -4,6 +4,12 @@ const { connection } = require("../database/connection");
 const Sale = connection.define(
   "sale",
   {
+    saleId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     buyerId: {
       type: Sequelize.INTEGER,
       references: {

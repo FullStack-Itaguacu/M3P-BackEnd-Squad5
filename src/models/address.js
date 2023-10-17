@@ -3,9 +3,13 @@ const { connection } = require("../database/connection");
 const { User } = require("../models/user");
 const { User_Address } = require("./user_address");
 
-const Address = connection.define(
-  "address",
-  {
+const Address = connection.define("address",{
+    addressId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     zip: {
       type: Sequelize.INTEGER,
       allowNull: false,

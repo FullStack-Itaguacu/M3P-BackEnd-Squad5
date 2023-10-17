@@ -4,6 +4,12 @@ const { connection } = require("../database/connection");
 const User = connection.define(
   "users",
   {
+   userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
     fullName: {
       type: Sequelize.STRING,
       allowNull: false,

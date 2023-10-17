@@ -2,9 +2,16 @@ const { connection } = require("../database/connection");
 const { Sequelize } = require("sequelize");
 const { User } = require("./user");
 
+
 const Product = connection.define(
   "product",
-  {
+    {
+      productId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -136,6 +143,7 @@ const Product = connection.define(
     deletedAt: {
       type: Sequelize.DATE,
       allowNull: true,
+
     },
   },
   { paranoid: true }
