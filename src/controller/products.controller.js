@@ -60,13 +60,13 @@ class ProductsController {
   async listProductsById(request, response) {
     try {
       const productId = request.params.productId;
-      const product = await ProductModel.findById(productId)
+      const product = await ProductModel.findById(productId);
 
-      if(!product){
+      if (!product) {
         return response.status(404).send({
           error: "Produto não encontrado.",
-          cause: error.message
-        })
+          cause: error.message,
+        });
       }
 
       //200 caso o produto existir.
@@ -75,9 +75,9 @@ class ProductsController {
       console.error("Erro no endpoint /products/:productId:", error);
 
       //Erro de autenticação
-      if(error.name === "AuthenticationError"){
+      if (error.name === "AuthenticationError") {
         return response.status(401).send({
-          error: "A autenticação é necessária para acessar este endpoint."
+          error: "A autenticação é necessária para acessar este endpoint.",
         });
       }
     }
@@ -103,7 +103,7 @@ class ProductsController {
       }
 
       if (totalStock) {
-        options.order = [['totalStock', totalStock === 'asc' ? 'ASC' : 'DESC']];
+        options.order = [["totalStock", totalStock === "asc" ? "ASC" : "DESC"]];
       }
 
       const products = await Product.findAll(options);
@@ -126,6 +126,7 @@ class ProductsController {
       }
       return response.status(500).send({
         error: "Erro interno do servidor.",
+        msg: error,
       });
     }
   }
