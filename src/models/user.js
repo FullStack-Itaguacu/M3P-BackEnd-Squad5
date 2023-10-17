@@ -1,14 +1,7 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
-const User = connection.define("user", {
-  id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-
+const User = connection.define("users", {
   fullName: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -81,7 +74,10 @@ const User = connection.define("user", {
     allowNull: true,
   },
   typeUser: {
-    type: Sequelize.ENUM(["administrador", "comprador"]),
+    type: Sequelize.ENUM('administrador', 'comprador'),
+    isIn: {
+      args: [['administrador', 'comprador']],
+      msg: 'O tipo do usuário deve ser "administrador" ou "comprador"'},
     allowNull: false,
   },
   createdAt: {
@@ -91,7 +87,11 @@ const User = connection.define("user", {
   updatedAt: {
     type: Sequelize.DATE,
     allowNull: false,
-  }
-},{ underscored: false, paranoid: true });
+  },
+  deletedAt: {
+    type: Sequelize.DATE,
+    allowNull: true,
+  },
+},{ underscored: true, paranoid: true });
 
 module.exports = { User };
