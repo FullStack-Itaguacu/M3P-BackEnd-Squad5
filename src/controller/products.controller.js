@@ -173,9 +173,60 @@ class ProductsController {
 
   async updateProductsByAdminById(request, response) {
     try {
-      return response
-        .status(201)
-        .send({ msg: "--- updateProductsById ---", endpoint: request.url });
+      //Verificar se o usuário é um ADMIN através do payload do token JWT
+      const token = request.header('Authorization');
+
+      if(!token){
+        return response.status(401).send({
+          error:"Acesso não autorizado. Token JWT não fornecido.",
+          cause: error.message
+        });
+      }
+
+      const decodedToken = jwt.verify(token, JWT_SECRET_KEY)
+
+      if (decodedToken.payload.administrador !== 'S') {
+          return response.status(403).send({
+          error: "Acesso não autorizado!"
+        });
+      }
+
+      const productId = request.params.productId;
+      //Verifica se o produto existe
+      const product = await Product.findByPk(productId);
+
+      if(!product){
+        return response.status(404).send({
+          error: "Produto não encontrado.",
+          cause: error.message
+        });
+      }
+
+      //Campos a serem atualizados do corpo da requisição.
+      const {
+        name,
+        imageLink,
+        dosage,
+        totalStock,
+      } = request.body
+
+      //Atualizar os campos no produto
+      if (name !== undefined){
+        product.name = name;
+      }
+      if (imageLink !== undefined){
+        product.imageLink = imageLink;
+      }
+      if (dosage !== undefined){
+        product.dosage = dosage;
+      }
+      if (totalStock !== undefined){
+        product.totalStock = totalStock;
+      }
+
+      await product.save();
+
+      return response.status(204).send();
     } catch (error) {
       return response.status(400).send({
         msg: "Erro enviado do banco de dados",
