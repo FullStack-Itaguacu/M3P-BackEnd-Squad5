@@ -1,37 +1,55 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
-const User_address = connection.define("user_address",{
-    userAddressId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: { tableName: "users" },
-            key: "id",
+const User_Address = connection.define(
+  "users_address",
+  {
+    userId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "users",
+        key: "id",
+      },
+      allowNull: false,
+      validate: {
+        isInt: {
+          msg: "O ID do usuário precisar ser numérico.",
         },
-            allowNull: false,
-    },
-    address_id: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: { tableName: "addresses" },
-            key: "id",
+        notEmpty: {
+          msg: "O ID do usuário precisa ser informado.",
         },
-        allowNull: false,
+      },
+    },
+    addressId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "addresses",
+        key: "id",
+      },
+      allowNull: false,
+      validate: {
+        isInt: {
+          msg: "O ID do endereço precisar ser numérico.",
+        },
+        notEmpty: {
+          msg: "O ID do endereço precisa ser informado.",
+        },
+      },
     },
     createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
-},{ underscored: true, paranoid: true })
+    deletedAt: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    },
+  },
+  { paranoid: true }
+);
 
-module.exports = { User_address }
+module.exports = { User_Address };

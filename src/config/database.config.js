@@ -10,8 +10,6 @@ module.exports = {
   port: process.env.DB_PORT || 5000,
   define: {
     // O objeto define serve para colocarmos configurações de conexão auxiliares
-    underscored: true, //Traduz os campos para snake_case
-    underscoredAll: true, //Traduz todos os campos para snake_case
     paranoid: true,
   },
 };
