@@ -39,7 +39,7 @@ module.exports = {
         allowNull: false,
       },
       type_product: {
-        type: Sequelize.ENUM(["controlado", "não controlado"]),
+        type: Sequelize.ENUM("controlado", "não controlado"),
         allowNull: false,
       },
       total_stock: {
@@ -64,7 +64,7 @@ module.exports = {
       },
       deleted_at: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
     });
   },

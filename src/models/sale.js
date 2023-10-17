@@ -79,25 +79,25 @@ const Sale = connection.define("sale",{
         }
     },
     total: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false,
+      type: Sequelize.DECIMAL(10, 2),
+      allowNull: false,
     },
     typePayment: {
-        type: Sequelize.ENUM(
-            "credito",
-            "debito",
-            "pix",
-            "boleto",
-            "transferencia"
-        ),
+      type: Sequelize.ENUM(
+        "credito",
+        "debito",
+        "pix",
+        "boleto",
+        "transferencia"
+      ),
     },
     createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     deletedAt: {
         type: Sequelize.DATE,
@@ -105,4 +105,4 @@ const Sale = connection.define("sale",{
     },
 },{ underscored: true, paranoid: true });
 
-module.exports = { Sale }
+module.exports = { Sale };

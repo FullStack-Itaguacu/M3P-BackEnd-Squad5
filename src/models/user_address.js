@@ -31,12 +31,12 @@ const User_Address = connection.define("users_address",{
             }
     },
     createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     deletedAt: {
         type: Sequelize.DATE,
@@ -45,3 +45,4 @@ const User_Address = connection.define("users_address",{
 },{ underscored: true, paranoid: true })
 
 module.exports = { User_Address }
+

@@ -1,10 +1,10 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
-
 const { User } = require('../models/user');
 const { User_Address } = require('./user_address');
 
 const Address = connection.define("address",{
+
     zip: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -66,25 +66,26 @@ const Address = connection.define("address",{
         }
     },
     complement: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     lat: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     lon: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
     updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+      type: Sequelize.DATE,
+      allowNull: false,
     },
+
     deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,

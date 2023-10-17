@@ -13,4 +13,4 @@ class UserRouter{
     }
 }
 
-module.exports = new UserRouter()
+module.exports = new UserRouter();
