@@ -1,42 +1,40 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
-const User_address = connection.define(
-  "user_address",
+const User_Address = connection.define(
+  "users_address",
   {
-    id: {
+    userId: {
       type: Sequelize.INTEGER,
+      references: {
+        model: "users",
+        key: "id",
+      },
       allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: { tableName: "users" },
-            key: "id",
+      validate: {
+        isInt: {
+          msg: "O ID do usuário precisar ser numérico.",
         },
-            allowNull: false,
-        validate: {
-            isInt: {
-                    msg: 'O ID do usuário precisar ser numérico.' },
-            notEmpty: {
-                    msg: "O ID do usuário precisa ser informado." }
-            }
-    },
-    address_id: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: { tableName: "addresses" },
-            key: "id",
+        notEmpty: {
+          msg: "O ID do usuário precisa ser informado.",
         },
-        allowNull: false,
-        validate: {
-            isInt: {
-                    msg: 'O ID do endereço precisar ser numérico.' },
-            notEmpty: {
-                    msg: "O ID do endereço precisa ser informado." }
-            }
+      },
+    },
+    addressId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "addresses",
+        key: "id",
+      },
+      allowNull: false,
+      validate: {
+        isInt: {
+          msg: "O ID do endereço precisar ser numérico.",
+        },
+        notEmpty: {
+          msg: "O ID do endereço precisa ser informado.",
+        },
+      },
     },
     createdAt: {
       type: Sequelize.DATE,
@@ -46,8 +44,12 @@ const User_address = connection.define(
       type: Sequelize.DATE,
       allowNull: false,
     },
+    deletedAt: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    },
   },
-  { underscored: false, paranoid: true }
+  { paranoid: true }
 );
 
-module.exports = { User_address };
+module.exports = { User_Address };
