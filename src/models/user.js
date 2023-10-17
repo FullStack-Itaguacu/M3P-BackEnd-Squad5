@@ -74,7 +74,10 @@ const User = connection.define("users", {
     allowNull: true,
   },
   typeUser: {
-    type: Sequelize.ENUM(["administrador", "comprador"]),
+    type: Sequelize.ENUM('administrador', 'comprador'),
+    isIn: {
+      args: [['administrador', 'comprador']],
+      msg: 'O tipo do usuário deve ser "administrador" ou "comprador"'},
     allowNull: false,
   },
   createdAt: {
