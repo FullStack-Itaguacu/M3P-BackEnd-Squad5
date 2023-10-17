@@ -1,20 +1,12 @@
 const { Sequelize } = require("sequelize");
 const { connection } = require("../database/connection");
 
-const User_address = connection.define(
-  "user_address",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    user_id: {
+const User_Address = connection.define("users_address",{
+    userId: {
         type: Sequelize.INTEGER,
         references: {
-            model: { tableName: "users" },
-            key: "id",
+            model: 'users',
+            key: 'id',
         },
             allowNull: false,
         validate: {
@@ -24,11 +16,11 @@ const User_address = connection.define(
                     msg: "O ID do usuário precisa ser informado." }
             }
     },
-    address_id: {
+    addressId: {
         type: Sequelize.INTEGER,
         references: {
-            model: { tableName: "addresses" },
-            key: "id",
+            model: 'addresses',
+            key: 'id',
         },
         allowNull: false,
         validate: {
@@ -46,8 +38,11 @@ const User_address = connection.define(
       type: Sequelize.DATE,
       allowNull: false,
     },
-  },
-  { underscored: false, paranoid: true }
-);
+    deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+    },
+},{ underscored: true, paranoid: true })
 
-module.exports = { User_address };
+module.exports = { User_Address }
+

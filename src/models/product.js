@@ -2,22 +2,39 @@ const { connection } = require("../database/connection");
 const { Sequelize } = require("sequelize");
 const { User } = require("./user");
 
-const Product = connection.define(
-  "product",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: { msg: "Campo nome deve ser preenchido", status: "422" },
-        },
+const Product = connection.define("product", {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    notEmpty: {
+      msg: "O nome do produto deve ser informado."
+   },
+  },
+
+  labName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    notEmpty: {
+      msg: "O nome do laboratório deve ser informado."
+
+   }
+  },
+
+  imageLink: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    notEmpty: {
+      msg: "A imagem do produto deve ser informada."
+
+   }
+  },
+
+  dosage: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: {
+          msg: "A dosagem do produto precisa ser informada."
       },
     },
     labName: {
@@ -112,7 +129,11 @@ const Product = connection.define(
       allowNull: false,
     },
   },
-  { underscored: false, paranoid: true }
-);
+  deletedAt: {
+    type: Sequelize.DATE,
+    allowNull: true,
+},
+},{ underscored: true, paranoid: true });
+
 
 module.exports = { Product };
