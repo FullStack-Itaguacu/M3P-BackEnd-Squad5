@@ -2,6 +2,7 @@
 const { Product } = require("../models/product");
 const { config } = require("dotenv");
 config();
+const { Op } = require('sequelize')
 
 class BuyersController{
     async listBuyers(request, response) {
@@ -17,7 +18,7 @@ class BuyersController{
 
     async listBuyersById(request, response){
         try {
-            const authenticatedUser = request.user;
+            const authenticatedUser = request.payload;
 
             if (!authenticatedUser){
                 return response.status(401).send({
@@ -33,7 +34,7 @@ class BuyersController{
 
             //Obter o userId da rota
             const userId = request.params.userId;
-            const product = await Product.findOne({
+            const product = await User.findOne({
                 where:{
                     userId: userId
                 }
