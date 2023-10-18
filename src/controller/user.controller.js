@@ -377,7 +377,12 @@ class UsersController {
         throw new Error("A data de nascimento esta inválida.");
       }
 
-      if (!cpf || cpf.length != 11) {
+      if (!cpf) {
+        status = 422;
+        throw new Error("O CPF deve ser informado");
+      }
+
+      if (cpf.length != 11) {
         status = 400;
         throw new Error("O CPF deve ter exatamente 11 caracteres.");
       }

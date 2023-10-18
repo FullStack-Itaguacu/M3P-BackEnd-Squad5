@@ -1,9 +1,10 @@
 //const { checkBody } = require('../services/checkBody')
 const { Product } = require("../models/product");
+const { Op } = require("sequelize");
+
 class ProductsController {
   async createProduct(request, response) {
     try {
-      console.log(request.payload);
       const isAdmin = request.payload.administrador;
       if (isAdmin == "N") {
         return response.status(403).send({ msg: "Sem autorização de acesso" });
@@ -13,7 +14,7 @@ class ProductsController {
         labName,
         imageLink,
         dosage,
-        dosageUnit,
+        unitDosage,
         description,
         unitPrice,
         typeProduct,
@@ -25,7 +26,7 @@ class ProductsController {
         labName,
         imageLink,
         dosage,
-        dosageUnit,
+        unitDosage,
         description,
         unitPrice,
         typeProduct,
@@ -36,6 +37,11 @@ class ProductsController {
         .status(201)
         .send({ msg: "Produto criado com sucesso", body: data });
     } catch (error) {
+      if (!error.errors) {
+        return response.status(500).send({
+          error: error.message,
+        });
+      }
       const statusCode = error.errors[0].message.status || 400;
       const message = error.errors[0].message.msg || error.message;
       return response.status(statusCode).send({
@@ -48,7 +54,7 @@ class ProductsController {
   async listProductsByAdmin(request, response) {
     try {
       // Verifica se o usuário é ADMIN
-      const isAdmin = (request.payload.administrador === "S");
+      const isAdmin = request.payload.administrador === "S";
       if (!isAdmin) {
         return response.status(403).send({ msg: "Sem autorização de acesso" });
       }
@@ -87,7 +93,8 @@ class ProductsController {
       }
       if (error.name === "AuthorizationError") {
         return response.status(403).send({
-          error: "Acesso proibido. Somente usuários ADMIN podem acessar este endpoint.",
+          error:
+            "Acesso proibido. Somente usuários ADMIN podem acessar este endpoint.",
         });
       }
       return response.status(500).send({
@@ -125,6 +132,10 @@ class ProductsController {
 
   async listProducts(request, response) {
     try {
+      const isAdmin = request.payload.administrador;
+      if (isAdmin == "N") {
+        return response.status(403).send({ msg: "Sem autorização de acesso" });
+      }
       const { offset, limit } = request.params;
       const { name, typeProduct, totalStock } = request.query;
 
@@ -174,20 +185,20 @@ class ProductsController {
   async updateProductsByAdminById(request, response) {
     try {
       //Verificar se o usuário é um ADMIN através do payload do token JWT
-      const token = request.header('Authorization');
+      const token = request.header("Authorization");
 
-      if(!token){
+      if (!token) {
         return response.status(401).send({
-          error:"Acesso não autorizado. Token JWT não fornecido.",
-          cause: error.message
+          error: "Acesso não autorizado. Token JWT não fornecido.",
+          cause: error.message,
         });
       }
 
-      const decodedToken = jwt.verify(token, JWT_SECRET_KEY)
+      const decodedToken = jwt.verify(token, JWT_SECRET_KEY);
 
-      if (decodedToken.payload.administrador !== 'S') {
-          return response.status(403).send({
-          error: "Acesso não autorizado!"
+      if (decodedToken.payload.administrador !== "S") {
+        return response.status(403).send({
+          error: "Acesso não autorizado!",
         });
       }
 
@@ -195,32 +206,27 @@ class ProductsController {
       //Verifica se o produto existe
       const product = await Product.findByPk(productId);
 
-      if(!product){
+      if (!product) {
         return response.status(404).send({
           error: "Produto não encontrado.",
-          cause: error.message
+          cause: error.message,
         });
       }
 
       //Campos a serem atualizados do corpo da requisição.
-      const {
-        name,
-        imageLink,
-        dosage,
-        totalStock,
-      } = request.body
+      const { name, imageLink, dosage, totalStock } = request.body;
 
       //Atualizar os campos no produto
-      if (name !== undefined){
+      if (name !== undefined) {
         product.name = name;
       }
-      if (imageLink !== undefined){
+      if (imageLink !== undefined) {
         product.imageLink = imageLink;
       }
-      if (dosage !== undefined){
+      if (dosage !== undefined) {
         product.dosage = dosage;
       }
-      if (totalStock !== undefined){
+      if (totalStock !== undefined) {
         product.totalStock = totalStock;
       }
 

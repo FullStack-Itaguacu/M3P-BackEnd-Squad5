@@ -22,7 +22,7 @@ class ProductsRouter {
       listProductsByAdmin /* #swagger.tags = ['Products']*/
     );
     productsRoutes.get(
-      "/products/:offset/:limit",
+      "/products/admin/:offset/:limit",
       auth,
       listProducts /* #swagger.tags = ['Products']*/
     );

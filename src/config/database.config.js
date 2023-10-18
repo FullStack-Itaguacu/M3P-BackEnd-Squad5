@@ -11,5 +11,6 @@ module.exports = {
   define: {
     // O objeto define serve para colocarmos configurações de conexão auxiliares
     paranoid: true,
+    underscored: true,
   },
 };
