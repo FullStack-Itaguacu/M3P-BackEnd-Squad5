@@ -42,7 +42,20 @@ class SalesController {
     //E servirá para calcular os dados do dashboard
     async listSalesById(request, response) {
         try {
-            return response.status(201).send({ 'msg': '--- listBuyersById ---', 'endpoint': request.url })
+            const { buyer_id } = request.query;
+
+            let lista = {}
+
+            if(buyer_id){
+                lista  = buyer_id
+            }
+
+            const data = Sale.findAll({
+                where: lista
+            })
+
+            response.status(200).send(data)
+
         } catch (error) {
             return response.status(400).send({
                 msg: "Erro enviado do banco de dados",
