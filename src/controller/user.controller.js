@@ -490,20 +490,6 @@ class UsersController {
     }
   }
 
-  // Atualizar usuário - comprador para usuário - admin
-  async updateUser(request, response) {
-    try {
-      return response
-        .status(201)
-        .send({ msg: "--- ipdateUser ---", endpoint: request.url });
-    } catch (error) {
-      return response.status(400).send({
-        msg: "Erro enviado do banco de dados",
-        error: error.message,
-      });
-    }
-  }
-
   // Para atualização de senha
   async changePassword(request, response) {
     try {
