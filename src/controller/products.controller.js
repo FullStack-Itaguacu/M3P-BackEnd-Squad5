@@ -183,9 +183,7 @@ class ProductsController {
         });
       }
 
-      const decodedToken = jwt.verify(token, JWT_SECRET_KEY)
-
-      if (decodedToken.payload.administrador !== 'S') {
+      if (request.payload.administrador !== 'S') {
           return response.status(403).send({
           error: "Acesso não autorizado!"
         });
