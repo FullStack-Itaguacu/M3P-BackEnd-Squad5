@@ -134,18 +134,15 @@ class UsersController {
 
   async listAddress(request, response) {
     try {
-      const { type } = request.query;
-      let list = {};
+      const userId = request.payload.id;
 
-      if (type) {
-        list = { type };
-      }
-
-      const userAddressData = await User_address.findAll({
-        where: list,
+      const userAddressData = await User.findAll({
+        where: { id: 3 },
+        include: Address,
+        // attributes: ["addresses"],
       });
 
-      return response.status(200).send(userAddressData);
+      return response.status(200).send(userAddressData[0].addresses);
     } catch (error) {
       console.log(error.message);
       return response

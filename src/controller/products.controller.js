@@ -1,7 +1,6 @@
 //const { checkBody } = require('../services/checkBody')
 const { Product } = require("../models/product");
 const { Op } = require("sequelize");
-
 class ProductsController {
   async createProduct(request, response) {
     try {
@@ -58,10 +57,14 @@ class ProductsController {
       if (!isAdmin) {
         return response.status(403).send({ msg: "Sem autorização de acesso" });
       }
+      let { offset, limit } = request.params;
+      if (limit > 20) limit = 20;
       const { name, typeProduct, totalStock } = request.query;
       const userId = request.payload.id;
 
       let options = {
+        limit: parseInt(limit) || 20,
+        offset: parseInt(offset) || 0,
         where: { userId },
       };
 
@@ -107,36 +110,27 @@ class ProductsController {
   async listProductsById(request, response) {
     try {
       const productId = request.params.productId;
-      const product = await ProductModel.findById(productId);
+      const product = await Product.findByPk(productId);
 
       if (!product) {
         return response.status(404).send({
           error: "Produto não encontrado.",
-          cause: error.message,
         });
       }
 
       //200 caso o produto existir.
       return response.status(200).send(product);
     } catch (error) {
-      console.error("Erro no endpoint /products/:productId:", error);
-
-      //Erro de autenticação
-      if (error.name === "AuthenticationError") {
-        return response.status(401).send({
-          error: "A autenticação é necessária para acessar este endpoint.",
-        });
-      }
+      return response.status(500).send({
+        error: error.message,
+      });
     }
   }
 
   async listProducts(request, response) {
     try {
-      const isAdmin = request.payload.administrador;
-      if (isAdmin == "N") {
-        return response.status(403).send({ msg: "Sem autorização de acesso" });
-      }
-      const { offset, limit } = request.params;
+      let { offset, limit } = request.params;
+      if (limit > 20) limit = 20;
       const { name, typeProduct, totalStock } = request.query;
 
       let options = {
