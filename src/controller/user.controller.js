@@ -184,6 +184,8 @@ class UsersController {
                 msg: "Erro enviado do banco de dados",
                 error: error.message
             })
+          }
+        }
 
   async createOneUser(request, response) {
     const { user, address } = request.body;
