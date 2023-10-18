@@ -8,14 +8,24 @@ const { auth } = require("../middleware/auth");
 class SalesRouter {
   routesFromSales() {
     const salesRoutes = Router();
-    salesRoutes.post("/sales", createSales /* #swagger.tags = ['Sales']*/);
-    salesRoutes.get("/sales", listSalesById /* #swagger.tags = ['Sales']*/);
+    salesRoutes.post(
+      "/sales",
+      auth,
+      createSales /* #swagger.tags = ['Sales']*/
+    );
+    salesRoutes.get(
+      "/sales",
+      auth,
+      listSalesById /* #swagger.tags = ['Sales']*/
+    );
     salesRoutes.get(
       "/sales/admin",
+      auth,
       listSalesById /* #swagger.tags = ['Sales']*/
     );
     salesRoutes.get(
       "/sales/dashboard/admin",
+      auth,
       listSalesById /* #swagger.tags = ['Sales']*/
     );
     return salesRoutes;

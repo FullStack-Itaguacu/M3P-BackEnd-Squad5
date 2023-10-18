@@ -31,7 +31,7 @@ class UsersController {
 
       if (!usuario) {
         return response
-          .status(404)
+          .status(401)
           .send({ message: "Email do usuário não cadastrado" });
       }
 
@@ -87,7 +87,7 @@ class UsersController {
 
       if (!usuario) {
         return response
-          .status(404)
+          .status(401)
           .send({ message: "Email do usuário não cadastrado" });
       }
 
@@ -132,60 +132,70 @@ class UsersController {
     }
   }
 
-    async listAddress(request, response) {
-        try {
-            const { type } = request.query;
-            let list = {};
+  async listAddress(request, response) {
+    try {
+      const { type } = request.query;
+      let list = {};
 
-            if (type) {
-                list = { type };
-            }
+      if (type) {
+        list = { type };
+      }
 
-            const userAddressData = await User_address.findAll({
-                where: list,
-            });
+      const userAddressData = await User_address.findAll({
+        where: list,
+      });
 
-            return response.status(200).send(userAddressData);
-        } catch (error) {
-            console.log(error.message);
-            return response.status(400).send({ message: 'Não foi possível listar os endereços!' });
-        }
+      return response.status(200).send(userAddressData);
+    } catch (error) {
+      console.log(error.message);
+      return response
+        .status(400)
+        .send({ message: "Não foi possível listar os endereços!" });
     }
+  }
 
-    // Atualizar usuário - comprador para usuário - admin  
-    async updateUser(request, response) {
-        try {
-            const { userId } = request.params
-            const { fullName, email, cpf, phone, typeUser } = request.body
+  // Atualizar usuário - comprador para usuário - admin
+  async updateUser(request, response) {
+    try {
+      const { userId } = request.params;
+      const { fullName, email, cpf, phone, typeUser } = request.body;
 
-            const user = await User.findByPk(userId)
+      const user = await User.findByPk(userId);
 
-            if (!user) {
-                return response.status(201).send({ message: "Usuário não pode ser encontrado!" })
-            }
+      if (!user) {
+        return response
+          .status(201)
+          .send({ message: "Usuário não pode ser encontrado!" });
+      }
 
-            if (fullName) {
-                user.fullName = fullName
-            } if (email) {
-                user.email = email
-            } if (cpf) {
-                user.cpf = cpf
-            } if (phone) {
-                user.phone = phone
-            } if (typeUser) {
-                user.typeUser = typeUser
-            }
+      if (fullName) {
+        user.fullName = fullName;
+      }
+      if (email) {
+        user.email = email;
+      }
+      if (cpf) {
+        user.cpf = cpf;
+      }
+      if (phone) {
+        user.phone = phone;
+      }
+      if (typeUser) {
+        user.typeUser = typeUser;
+      }
 
-            await User.save()
+      await User.save();
 
-            return response.status(201).send({ 'message': 'Dados atualizados com sucesso!' })
-        } catch (error) {
-            return response.status(400).send({
-                msg: "Erro enviado do banco de dados",
-                error: error.message
-            })
-          }
-        }
+      return response
+        .status(201)
+        .send({ message: "Dados atualizados com sucesso!" });
+    } catch (error) {
+      return response.status(400).send({
+        msg: "Erro enviado do banco de dados",
+        error: error.message,
+      });
+    }
+  }
 
   async createOneUser(request, response) {
     const { user, address } = request.body;
@@ -212,7 +222,12 @@ class UsersController {
         throw new Error("A data de nascimento esta inválida.");
       }
 
-      if (!cpf || cpf.length != 11) {
+      if (!cpf) {
+        status = 422;
+        throw new Error("O CPF deve ser informado");
+      }
+
+      if (cpf.length != 11) {
         status = 400;
         throw new Error("O CPF deve ter exatamente 11 caracteres.");
       }
@@ -245,7 +260,6 @@ class UsersController {
         if (!numberStreet) {
           status = 422;
           throw new Error("O número é obrigatório");
-
         }
 
         if (!street) {
@@ -321,12 +335,10 @@ class UsersController {
         }
       }
       if (error.message.split("\n").length > 1) {
-        return response
-          .status(status)
-          .json({
-            msg: "Erro ao criar usuário",
-            causes: error.message.split("\n"),
-          });
+        return response.status(status).json({
+          msg: "Erro ao criar usuário",
+          causes: error.message.split("\n"),
+        });
       }
       console.log(error.message.split("\n"));
       return response
@@ -476,12 +488,10 @@ class UsersController {
         }
       }
       if (error.message.split("\n").length > 1) {
-        return response
-          .status(status)
-          .json({
-            msg: "Erro ao criar usuário",
-            causes: error.message.split("\n"),
-          });
+        return response.status(status).json({
+          msg: "Erro ao criar usuário",
+          causes: error.message.split("\n"),
+        });
       }
       console.log(error.message.split("\n"));
       return response
