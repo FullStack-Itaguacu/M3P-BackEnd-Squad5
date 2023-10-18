@@ -2,6 +2,7 @@
 
 const { Sale } = require('../models/sale')
 const { Product } = require('../models/product')
+const { User } = require('../models/user')
 
 class SalesController {
     async createSales(request, response) {
@@ -23,7 +24,7 @@ class SalesController {
             const sale = await Sale.create({
                 productId,
                 amountBuy,
-                users_addresses_id, 
+                users_addresses_id,
                 typePayment,
                 total
             })
@@ -46,8 +47,8 @@ class SalesController {
 
             let lista = {}
 
-            if(buyer_id){
-                lista  = buyer_id
+            if (buyer_id) {
+                lista = buyer_id
             }
 
             const data = Sale.findAll({
@@ -64,6 +65,36 @@ class SalesController {
         }
     }
 
+
+    async listSalesAdmin(request, response) {
+        try {
+            const { seller_id } = request.query;
+
+            let lista = {}
+
+            if (seller_id) {
+                lista = seller_id
+            }
+
+            if (typeUser === "comprador") {
+                response.status(403).send({ "message": "O usuário é comprador, para ativar essa função o usuário deve ser aministrador!" })
+            }
+
+            const data = Sale.findAll({
+                where: lista
+            })
+
+            response.status(200).send(data)
+
+        } catch (error) {
+            return response.status(400).send({
+                msg: "Erro enviado do banco de dados",
+                error: error.message
+            })
+        }
+    }
 }
+
+
 
 module.exports = new SalesController()
