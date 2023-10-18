@@ -93,6 +93,28 @@ class SalesController {
             })
         }
     }
+
+    async dashboard(request, response){
+        try {
+            const { seller_id } = request.query
+
+            const totalSales = Sale.sum('total', {
+                where: seller_id
+            });
+            response.status(200).send(totalSales)
+
+            const totalAmount = Sale.sum('amountBuy', {
+                where: seller_id
+            });
+            response.status(200).send(totalAmount)
+
+            if (typeUser === "comprador") {
+                response.status(403).send({ "message": "O usuário é comprador, para ativar essa função o usuário deve ser aministrador!" })
+            }
+        } catch (error) {
+            
+        }
+    }
 }
 
 
