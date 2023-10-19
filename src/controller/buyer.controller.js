@@ -22,6 +22,9 @@ class BuyersController {
         limit: parseInt(limit) || 20,
         offset: parseInt(offset) || 0,
         where: {},
+        attributes: {
+          exclude: ["password", "deletedAt"],
+        },
       };
 
       if (fullName) {
@@ -51,35 +54,30 @@ class BuyersController {
 
   async listBuyersById(request, response) {
     try {
-      const authenticatedUser = request.payload;
-
-      if (!authenticatedUser) {
-        return response.status(401).send({
-          msg: "Acesso não autorizado. É necessário a autenticação.",
-        });
-      }
-
-      if (authenticatedUser.typeUser !== "administrador") {
+      if (request.payload.administrador !== "S") {
         return response.status(403).send({
-          msg: "Acesso não autorizado. Este endpoint é permitido para administradores.",
+          error: "Acesso não autorizado!",
         });
       }
 
       //Obter o userId da rota
       const userId = request.params.userId;
-      const product = await User.findOne({
+      const user = await User.findOne({
         where: {
-          userId: userId,
+          id: userId,
+        },
+        attributes: {
+          exclude: ["password", "deletedAt"],
         },
       });
 
-      if (!product) {
+      if (!user) {
         return response.status(404).send({
-          msg: "Produto não encontrado para usuário especificado.",
+          msg: "Usuário não encontrado",
         });
       }
 
-      return response.status(200).send(product);
+      return response.status(200).send(user);
     } catch (error) {
       return response.status(400).send({
         msg: "Erro enviado do banco de dados",
@@ -91,11 +89,35 @@ class BuyersController {
   // Atualizar usuário - comprador para usuário - admin
   async updateBuyerById(request, response) {
     try {
-      return response
-        .status(201)
-        .send({ msg: "--- ipdateUser ---", endpoint: request.url });
+      const { userId } = request.params;
+      const { fullName, email, cpf, phone, typeUser } = request.body;
+      const updatedData = Object.assign(
+        {},
+        fullName && { fullName },
+        email && { email },
+        cpf && { cpf },
+        phone && { phone },
+        typeUser && { typeUser }
+      );
+      const user = await User.findByPk(userId);
+      if (!user) {
+        return response.status(404).send({
+          msg: "Usuário não encontrado.",
+        });
+      }
+      if (user.typeUser == "comprador" && typeUser == "administrador") {
+        return response
+          .status(422)
+          .send(
+            "Não é possível alterar usuário de comprador para administrador"
+          );
+      }
+      const data = await User.update(updatedData, { where: { id: userId } });
+
+      if (data[0] == 0) return res.status(422).send("Campo inválido");
+      return response.status(204).send(data);
     } catch (error) {
-      return response.status(400).send({
+      return response.status(422).send({
         msg: "Erro enviado do banco de dados",
         error: error.message,
       });

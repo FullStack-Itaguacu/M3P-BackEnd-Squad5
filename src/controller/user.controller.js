@@ -150,49 +150,6 @@ class UsersController {
     }
   }
 
-  // Atualizar usuário - comprador para usuário - admin
-  async updateUser(request, response) {
-    try {
-      const { userId } = request.params;
-      const { fullName, email, cpf, phone, typeUser } = request.body;
-
-      const user = await User.findByPk(userId);
-
-      if (!user) {
-        return response
-          .status(201)
-          .send({ message: "Usuário não pode ser encontrado!" });
-      }
-
-      if (fullName) {
-        user.fullName = fullName;
-      }
-      if (email) {
-        user.email = email;
-      }
-      if (cpf) {
-        user.cpf = cpf;
-      }
-      if (phone) {
-        user.phone = phone;
-      }
-      if (typeUser) {
-        user.typeUser = typeUser;
-      }
-
-      await User.save();
-
-      return response
-        .status(201)
-        .send({ message: "Dados atualizados com sucesso!" });
-    } catch (error) {
-      return response.status(400).send({
-        msg: "Erro enviado do banco de dados",
-        error: error.message,
-      });
-    }
-  }
-
   async createOneUser(request, response) {
     const { user, address } = request.body;
     const { fullName, cpf, birthDate, email, phone, password } = user;
@@ -336,7 +293,6 @@ class UsersController {
           causes: error.message.split("\n"),
         });
       }
-      console.log(error.message.split("\n"));
       return response
         .status(status)
         .json({ msg: "Erro ao criar usuário", cause: error.message });

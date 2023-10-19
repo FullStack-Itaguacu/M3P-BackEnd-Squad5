@@ -2,7 +2,6 @@ const {
   loginUser,
   createOneUser,
   loginUserAdmin,
-  updateUser,
   createOneUserAdmin,
   listAddress,
 } = require("../controller/user.controller");
@@ -13,7 +12,6 @@ class UserRouter {
   routesFromUser() {
     const userRoutes = Router();
     userRoutes.post("/user/login", loginUser);
-    userRoutes.patch("/buyers/admin/:userId", auth, updateUser);
     userRoutes.get("/buyers/address", auth, listAddress);
     userRoutes.post("/user/admin/login", loginUserAdmin);
     userRoutes.post("/user/signup", createOneUser);
