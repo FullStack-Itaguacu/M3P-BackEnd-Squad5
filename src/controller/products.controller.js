@@ -1,9 +1,9 @@
 //const { checkBody } = require('../services/checkBody')
 const { Product } = require("../models/product");
+const { Op } = require("sequelize");
 class ProductsController {
   async createProduct(request, response) {
     try {
-      console.log(request.payload);
       const isAdmin = request.payload.administrador;
       if (isAdmin == "N") {
         return response.status(403).send({ msg: "Sem autorização de acesso" });
@@ -13,7 +13,7 @@ class ProductsController {
         labName,
         imageLink,
         dosage,
-        dosageUnit,
+        unitDosage,
         description,
         unitPrice,
         typeProduct,
@@ -25,7 +25,7 @@ class ProductsController {
         labName,
         imageLink,
         dosage,
-        dosageUnit,
+        unitDosage,
         description,
         unitPrice,
         typeProduct,
@@ -36,6 +36,11 @@ class ProductsController {
         .status(201)
         .send({ msg: "Produto criado com sucesso", body: data });
     } catch (error) {
+      if (!error.errors) {
+        return response.status(500).send({
+          error: error.message,
+        });
+      }
       const statusCode = error.errors[0].message.status || 400;
       const message = error.errors[0].message.msg || error.message;
       return response.status(statusCode).send({
@@ -48,14 +53,18 @@ class ProductsController {
   async listProductsByAdmin(request, response) {
     try {
       // Verifica se o usuário é ADMIN
-      const isAdmin = (request.payload.administrador === "S");
+      const isAdmin = request.payload.administrador === "S";
       if (!isAdmin) {
         return response.status(403).send({ msg: "Sem autorização de acesso" });
       }
+      let { offset, limit } = request.params;
+      if (limit > 20) limit = 20;
       const { name, typeProduct, totalStock } = request.query;
       const userId = request.payload.id;
 
       let options = {
+        limit: parseInt(limit) || 20,
+        offset: parseInt(offset) || 0,
         where: { userId },
       };
 
@@ -87,7 +96,8 @@ class ProductsController {
       }
       if (error.name === "AuthorizationError") {
         return response.status(403).send({
-          error: "Acesso proibido. Somente usuários ADMIN podem acessar este endpoint.",
+          error:
+            "Acesso proibido. Somente usuários ADMIN podem acessar este endpoint.",
         });
       }
       return response.status(500).send({
@@ -100,32 +110,27 @@ class ProductsController {
   async listProductsById(request, response) {
     try {
       const productId = request.params.productId;
-      const product = await ProductModel.findById(productId);
+      const product = await Product.findByPk(productId);
 
       if (!product) {
         return response.status(404).send({
           error: "Produto não encontrado.",
-          cause: error.message,
         });
       }
 
       //200 caso o produto existir.
       return response.status(200).send(product);
     } catch (error) {
-      console.error("Erro no endpoint /products/:productId:", error);
-
-      //Erro de autenticação
-      if (error.name === "AuthenticationError") {
-        return response.status(401).send({
-          error: "A autenticação é necessária para acessar este endpoint.",
-        });
-      }
+      return response.status(500).send({
+        error: error.message,
+      });
     }
   }
 
   async listProducts(request, response) {
     try {
-      const { offset, limit } = request.params;
+      let { offset, limit } = request.params;
+      if (limit > 20) limit = 20;
       const { name, typeProduct, totalStock } = request.query;
 
       let options = {
@@ -174,18 +179,9 @@ class ProductsController {
   async updateProductsByAdminById(request, response) {
     try {
       //Verificar se o usuário é um ADMIN através do payload do token JWT
-      const token = request.header('Authorization');
-
-      if(!token){
-        return response.status(401).send({
-          error:"Acesso não autorizado. Token JWT não fornecido.",
-          cause: error.message
-        });
-      }
-
-      if (request.payload.administrador !== 'S') {
-          return response.status(403).send({
-          error: "Acesso não autorizado!"
+      if (request.payload.administrador !== "S") {
+        return response.status(403).send({
+          error: "Acesso não autorizado!",
         });
       }
 
@@ -193,32 +189,26 @@ class ProductsController {
       //Verifica se o produto existe
       const product = await Product.findByPk(productId);
 
-      if(!product){
+      if (!product) {
         return response.status(404).send({
-          error: "Produto não encontrado.",
-          cause: error.message
+          msg: "Produto não encontrado.",
         });
       }
 
       //Campos a serem atualizados do corpo da requisição.
-      const {
-        name,
-        imageLink,
-        dosage,
-        totalStock,
-      } = request.body
+      const { name, imageLink, dosage, totalStock } = request.body;
 
       //Atualizar os campos no produto
-      if (name !== undefined){
+      if (name !== undefined) {
         product.name = name;
       }
-      if (imageLink !== undefined){
+      if (imageLink !== undefined) {
         product.imageLink = imageLink;
       }
-      if (dosage !== undefined){
+      if (dosage !== undefined) {
         product.dosage = dosage;
       }
-      if (totalStock !== undefined){
+      if (totalStock !== undefined) {
         product.totalStock = totalStock;
       }
 

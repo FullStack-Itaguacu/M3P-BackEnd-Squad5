@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
       },
       unit_dosage: {
-        type: Sequelize.ENUM('mg', 'mcg', 'g', 'ml', '%', 'Outro'),
+        type: Sequelize.ENUM("mg", "mcg", "g", "ml", "%", "Outro"),
         allowNull: false,
       },
       description: {
@@ -49,7 +49,7 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: { tableName: "users" },
+          model: "users",
           key: "id",
         },
         allowNull: true,

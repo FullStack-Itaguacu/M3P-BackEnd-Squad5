@@ -4,7 +4,6 @@ dotenv.config();
 
 async function auth(request, response, next) {
   try {
-    console.log(request);
     const { authorization } = request.headers;
     request["payload"] = verify(authorization, process.env.JWT_SECRET_KEY);
     next();

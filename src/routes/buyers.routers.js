@@ -12,14 +12,17 @@ class BuyersRouter {
 
     buyersRoutes.get(
       "/buyers/admin/:offset/:limit",
+      auth,
       listBuyers /* #swagger.tags = ['Buyers']*/
     );
     buyersRoutes.get(
       "/buyers/admin/:userId",
+      auth,
       listBuyersById /* #swagger.tags = ['Buyers']*/
     );
     buyersRoutes.patch(
       "/buyers/admin/:userId",
+      auth,
       updateBuyerById /* #swagger.tags = ['Buyers']*/
     );
     return buyersRoutes;

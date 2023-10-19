@@ -18,22 +18,27 @@ class ProductsRouter {
     );
     productsRoutes.get(
       "/products/admin",
+      auth,
       listProductsByAdmin /* #swagger.tags = ['Products']*/
     );
     productsRoutes.get(
       "/products/:offset/:limit",
+      auth,
       listProducts /* #swagger.tags = ['Products']*/
     );
     productsRoutes.get(
       "/products/:productId",
+      auth,
       listProductsById /* #swagger.tags = ['Products']*/
     );
     productsRoutes.get(
-      "/products/admin/:productId",
+      "/products/admin/:offset/:limit",
+      auth,
       listProductsByAdmin /* #swagger.tags = ['Products']*/
     );
     productsRoutes.patch(
       "/products/admin/:productId",
+      auth,
       updateProductsByAdminById /* #swagger.tags = ['Products']*/
     );
     return productsRoutes;
