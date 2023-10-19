@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+const bcrypt = require("bcrypt");
 const { connection } = require("../database/connection");
 
 const User = connection.define(
@@ -67,7 +68,7 @@ const User = connection.define(
       allowNull: false,
       validate: {
         is: {
-          args: /^(?=.*\d)(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
+          args: /^(?=.*\d)(?=.*[A-Z])(?=.*[!$*&@#])[0-9a-zA-Z!$*&@#]{8,}$/,
           msg: "A senha deve ter 8 caracteres, 1 Letra Maiúscula, 1 Número e 1 Símbolo no mínimo: $*&@#",
         },
       },
@@ -101,7 +102,15 @@ const User = connection.define(
       allowNull: true,
     },
   },
-  { underscored: true, paranoid: true }
+  {
+    underscored: true,
+    paranoid: true,
+    hooks: {
+      afterValidate: (users, options) => {
+        users.password = bcrypt.hashSync(users.password, 10);
+      },
+    },
+  }
 );
 
 module.exports = { User };
