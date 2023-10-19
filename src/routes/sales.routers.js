@@ -3,6 +3,7 @@ const {
   createSales,
   listSalesById,
   dashboard,
+
   listSalesAdmin,
 } = require("../controller/sales.controller");
 const { auth } = require("../middleware/auth");
