@@ -84,11 +84,39 @@ class SalesController {
         });
       }
 
-      const data = Sale.findAll({
+      const data = await Sale.findAll({
         where: { sellerId: sellerId },
       });
 
       response.status(200).send(data);
+    } catch (error) {
+      return response.status(400).send({
+        msg: "Erro enviado do banco de dados",
+        error: error.message,
+      });
+    }
+  }
+
+  async dashboard(request, response) {
+    try {
+      if (request.payload.administrador !== "S") {
+        return response.status(403).send({
+          error: "Acesso não autorizado!",
+        });
+      }
+      const sellerId = request.payload.id;
+
+      const totalSales = await Sale.sum("total", {
+        where: { sellerId: sellerId },
+      });
+
+      const totalAmount = await Sale.sum("amountBuy", {
+        where: { sellerId: sellerId },
+      });
+
+      response
+        .status(200)
+        .send({ "total value": totalSales, "total amount": totalAmount });
     } catch (error) {
       return response.status(400).send({
         msg: "Erro enviado do banco de dados",

@@ -2,6 +2,8 @@ const { Router } = require("express");
 const {
   createSales,
   listSalesById,
+  dashboard,
+  listSalesAdmin,
 } = require("../controller/sales.controller");
 const { auth } = require("../middleware/auth");
 
@@ -21,12 +23,12 @@ class SalesRouter {
     salesRoutes.get(
       "/sales/admin",
       auth,
-      listSalesById /* #swagger.tags = ['Sales']*/
+      listSalesAdmin /* #swagger.tags = ['Sales']*/
     );
     salesRoutes.get(
       "/sales/dashboard/admin",
       auth,
-      listSalesById /* #swagger.tags = ['Sales']*/
+      dashboard /* #swagger.tags = ['Sales']*/
     );
     return salesRoutes;
   }
