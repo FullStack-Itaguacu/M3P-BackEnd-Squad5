@@ -137,9 +137,8 @@ class UsersController {
       const userId = request.payload.id;
 
       const userAddressData = await User.findAll({
-        where: { id: 3 },
+        where: { id: userId },
         include: Address,
-        // attributes: ["addresses"],
       });
 
       return response.status(200).send(userAddressData[0].addresses);

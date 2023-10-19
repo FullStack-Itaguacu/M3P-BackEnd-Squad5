@@ -179,18 +179,7 @@ class ProductsController {
   async updateProductsByAdminById(request, response) {
     try {
       //Verificar se o usuário é um ADMIN através do payload do token JWT
-      const token = request.header("Authorization");
-
-      if (!token) {
-        return response.status(401).send({
-          error: "Acesso não autorizado. Token JWT não fornecido.",
-          cause: error.message,
-        });
-      }
-
-      const decodedToken = jwt.verify(token, JWT_SECRET_KEY);
-
-      if (decodedToken.payload.administrador !== "S") {
+      if (request.payload.administrador !== "S") {
         return response.status(403).send({
           error: "Acesso não autorizado!",
         });
@@ -202,8 +191,7 @@ class ProductsController {
 
       if (!product) {
         return response.status(404).send({
-          error: "Produto não encontrado.",
-          cause: error.message,
+          msg: "Produto não encontrado.",
         });
       }
 
