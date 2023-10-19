@@ -60,16 +60,10 @@ class SalesController {
   //E servirá para calcular os dados do dashboard
   async listSalesById(request, response) {
     try {
-      const { buyer_id } = request.query;
+      const buyerId = request.payload.id;
 
-      let lista = {};
-
-      if (buyer_id) {
-        lista = buyer_id;
-      }
-
-      const data = Sale.findAll({
-        where: lista,
+      const data = await Sale.findAll({
+        where: { buyerId: buyerId },
       });
 
       response.status(200).send(data);
@@ -83,23 +77,15 @@ class SalesController {
 
   async listSalesAdmin(request, response) {
     try {
-      const { seller_id } = request.query;
-
-      let lista = {};
-
-      if (seller_id) {
-        lista = seller_id;
-      }
-
-      if (typeUser === "comprador") {
-        response.status(403).send({
-          message:
-            "O usuário é comprador, para ativar essa função o usuário deve ser aministrador!",
+      const sellerId = request.payload.id;
+      if (request.payload.administrador !== "S") {
+        return response.status(403).send({
+          error: "Acesso não autorizado!",
         });
       }
 
       const data = Sale.findAll({
-        where: lista,
+        where: { sellerId: sellerId },
       });
 
       response.status(200).send(data);
