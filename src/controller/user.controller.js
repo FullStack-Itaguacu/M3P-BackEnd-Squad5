@@ -5,6 +5,7 @@ const { connection } = require("../database/connection");
 const { sign } = require("jsonwebtoken");
 const moment = require("moment");
 const { config } = require("dotenv");
+const bcrypt = require("bcrypt");
 
 config();
 
@@ -35,7 +36,7 @@ class UsersController {
           .send({ message: "Email do usuário não cadastrado" });
       }
 
-      if (usuario.password !== password) {
+      if (!bcrypt.compareSync(password, usuario.password)) {
         throw new Error("Não foi possível realizar o login. Senha inválida.");
       }
 
