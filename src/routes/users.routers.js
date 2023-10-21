@@ -11,11 +11,23 @@ const { auth } = require("../middleware/auth");
 class UserRouter {
   routesFromUser() {
     const userRoutes = Router();
-    userRoutes.post("/user/login", loginUser);
-    userRoutes.get("/buyers/address", auth, listAddress);
-    userRoutes.post("/user/admin/login", loginUserAdmin);
-    userRoutes.post("/user/signup", createOneUser);
-    userRoutes.post("/user/admin/signup", auth, createOneUserAdmin);
+    userRoutes.post("/user/login", 
+    loginUser /* #swagger.tags = ['Users']*/
+    );
+    userRoutes.get("/buyers/address", 
+    auth, 
+    listAddress /* #swagger.tags = ['Users']*/
+    );
+    userRoutes.post("/user/admin/login", 
+    loginUserAdmin /* #swagger.tags = ['Users']*/
+    );
+    userRoutes.post("/user/signup",
+    createOneUser /* #swagger.tags = ['Users']*/
+    );
+    userRoutes.post("/user/admin/signup",
+    auth, 
+    createOneUserAdmin /* #swagger.tags = ['Users']*/
+    );
     return userRoutes;
   }
 }
