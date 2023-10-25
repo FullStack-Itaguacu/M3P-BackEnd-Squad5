@@ -33,7 +33,7 @@ class UsersController {
       if (!usuario) {
         return response
           .status(401)
-          .send({ message: "Email do usuário não cadastrado" });
+          .send({ error: "Email do usuário não cadastrado" });
       }
 
       if (!bcrypt.compareSync(password, usuario.password)) {
@@ -89,10 +89,10 @@ class UsersController {
       if (!usuario) {
         return response
           .status(401)
-          .send({ message: "Email do usuário não cadastrado" });
+          .send({ error: "Email do usuário não cadastrado" });
       }
 
-      if (usuario.password !== password) {
+      if (!bcrypt.compareSync(password, usuario.password)) {
         throw new Error("Não foi possível realizar o login. Senha inválida.");
       }
 
@@ -122,7 +122,7 @@ class UsersController {
         "Não foi possível realizar o login. Usuário não tem o perfil de administrador."
       ) {
         return response.status(403).send({
-          msg: error.message,
+          error: error.message,
         });
       } else {
         return response.status(401).send({
@@ -275,7 +275,7 @@ class UsersController {
 
       return response
         .status(201)
-        .send({ dados: newUser, menssage: "Criou um usuário" });
+        .send({ dados: newUser, menssage: "Usuário cadastrado com sucesso!" });
     } catch (error) {
       await transaction.rollback();
 
@@ -285,18 +285,18 @@ class UsersController {
         if (existeCPFErro || existeEmailErro) {
           return response
             .status(409)
-            .json({ msg: "Erro ao criar usuário", cause: error.message });
+            .json({ msg: "Erro ao criar usuário", error: error.message });
         }
       }
       if (error.message.split("\n").length > 1) {
         return response.status(status).json({
           msg: "Erro ao criar usuário",
-          causes: error.message.split("\n"),
+          error: error.message.split("\n"),
         });
       }
       return response
         .status(status)
-        .json({ msg: "Erro ao criar usuário", cause: error.message });
+        .json({ msg: "Erro ao criar usuário", error: error.message });
     }
   }
 
@@ -432,7 +432,7 @@ class UsersController {
 
       return response
         .status(201)
-        .send({ dados: newUser, menssage: "Criou um usuário" });
+        .send({ dados: newUser, menssage: "Usuário cadastrado com sucesso!" });
     } catch (error) {
       await transaction.rollback();
 
