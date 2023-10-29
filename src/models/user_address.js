@@ -6,6 +6,10 @@ const { User } = require("./user");
 const User_Address = connection.define(
   "users_address",
   {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+    },
     userId: {
       type: Sequelize.INTEGER,
       references: {
