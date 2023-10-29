@@ -20,6 +20,7 @@ class BuyersRouter {
       auth,
       listBuyersById /* #swagger.tags = ['Buyers']*/
     );
+
     buyersRoutes.patch(
       "/buyers/admin/:userId",
       auth,
