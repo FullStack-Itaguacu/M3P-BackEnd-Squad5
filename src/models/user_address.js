@@ -9,6 +9,7 @@ const User_Address = connection.define(
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     userId: {
       type: Sequelize.INTEGER,

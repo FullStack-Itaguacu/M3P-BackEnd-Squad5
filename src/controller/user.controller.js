@@ -141,7 +141,6 @@ class UsersController {
         where: { id: userId },
         include: Address,
       });
-      console.log(userAddressData[0].addresses);
       return response.status(200).send(userAddressData[0].addresses);
     } catch (error) {
       console.log(error.message);
