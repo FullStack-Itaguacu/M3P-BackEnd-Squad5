@@ -11,7 +11,9 @@ class SalesController {
     const buyerId = request.payload.id;
     try {
       const data = request.body;
+      console.log(data);
       for (const sale of data) {
+        console.log(sale);
         const { productId, amountBuy, usersAddressesId, typePayment } = sale;
 
         if (!productId || !amountBuy || !usersAddressesId || !typePayment) {
@@ -20,6 +22,7 @@ class SalesController {
             .send({ message: "Preencha todos os campos!" });
         }
         const product = await Product.findByPk(productId);
+
         if (!product)
           return response.status(404).send("Produto não encontrado");
         if (amountBuy > product.totalStock) {
@@ -32,6 +35,7 @@ class SalesController {
         product.totalStock = product.totalStock - amountBuy;
         await product.save();
         const sellerId = product.userId;
+
         const saleData = await Sale.create(
           {
             buyerId,
