@@ -64,6 +64,47 @@
           "Users"
         ],
         "description": "Rota para registrar um novo usuário.",
+        "parameters":[
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "fullName": {
+                      "type": "string",
+                      "example": "Full Name"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "example": "00000000000"
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-01-01"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "user@example.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "123-456-7890"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "P@ssw0rd"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -80,6 +121,51 @@
           "Users"
         ],
         "description": "Rota para registrar um novo usuário com privilégios de administrador.",
+        "parameters": [  
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "fullName": {
+                      "type": "string",
+                      "example": "Admin User"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "example": "11111111111"
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1980-01-01"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "admin@example.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "987-654-3210"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "AdminP@ss"
+                    },
+                    "typeUser": {
+                      "type": "string",
+                      "example": "administrador"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -233,7 +319,23 @@
         "tags": [
           "Products"
         ],
-        "description": "Obtenha a lista de produtos.",
+        "description": "Recupera produtos do administrador com opções de paginação.",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Posição inicial dos resultados a serem recuperados.",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número máximo de produtos a serem retornados.",
+            "required": false,
+            "type": "integer"
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -353,6 +455,34 @@
           "Sales"
         ],
         "description": "Crie uma nova venda.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "example": "productID123"
+                },
+                "amountBuy": {
+                  "type": "integer",
+                  "example": 5
+                },
+                "usersAddressesId": {
+                  "type": "string",
+                  "example": "addressID456"
+                },
+                "typePayment": {
+                  "type": "string",
+                  "example": "credit_card"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -383,6 +513,15 @@
           "Sales"
         ],
         "description": "Obtenha a lista de vendas (restrito a administradores).",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "ID do vendedor para filtrar as vendas (opcional)"
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -399,6 +538,22 @@
           "Sales"
         ],
         "description": "Obtenha dados do painel de controle de ventas (restrito a administradores).",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Data de início para o intervalo de dados do painel de controle (opcional)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Data de término para o intervalo de dados do painel de controle (opcional)"
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
