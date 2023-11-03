@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "FarmaSoft API",
-    "description": "FarmaSoft API: Conectando Você ao Mundo dos Medicamentos",
+    "title": "API de Backend da LAB Pharmacy Inc.",
+    "description": "API LAB Pharmacy Inc.: Conectando Você ao Mundo dos Medicamentos",
     "version": "1.0.0"
   },
   "host": "localhost:3333",
@@ -495,8 +495,31 @@
       "get": {
         "tags": [
           "Sales"
-        ],
+        ],        
         "description": "Obtenha a lista de vendas.",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "ID do vendedor para filtrar as vendas (opcional)"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Data de início para o intervalo de dados das vendas (opcional)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Data de término para o intervalo de dados das vendas (opcional)"
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
