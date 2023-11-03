@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "FarmaSoft API",
-    "description": "FarmaSoft API: Conectando Você ao Mundo dos Medicamentos",
+    "title": "API de Backend da LAB Pharmacy Inc.",
+    "description": "API LAB Pharmacy Inc.: Conectando Você ao Mundo dos Medicamentos",
     "version": "1.0.0"
   },
   "host": "localhost:3333",
