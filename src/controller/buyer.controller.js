@@ -114,7 +114,7 @@ class BuyersController {
       }
       const data = await User.update(updatedData, { where: { id: userId } });
 
-      if (data[0] == 0) return res.status(422).send("Campo inválido");
+      if (data[0] == 0) return response.status(422).send("Campo inválido");
       return response.status(204).send(data);
     } catch (error) {
       return response.status(422).send({

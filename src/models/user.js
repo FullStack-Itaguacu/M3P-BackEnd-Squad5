@@ -107,7 +107,9 @@ const User = connection.define(
     paranoid: true,
     hooks: {
       afterValidate: (users, options) => {
-        users.password = bcrypt.hashSync(users.password, 10);
+        if (users.password) {
+          users.password = bcrypt.hashSync(users.password, 10);
+        }
       },
     },
   }
