@@ -406,7 +406,7 @@ class UsersController {
           email,
           phone,
           password,
-          typeUser,
+          typeUser
         },
         { transaction }
       );
@@ -441,7 +441,7 @@ class UsersController {
         if (existeCPFErro || existeEmailErro) {
           return response
             .status(409)
-            .json({ msg: "Erro ao criar usuário", cause: error.message });
+            .json({ msg: "Erro ao criar usuário", error: error.message });
         }
       }
       if (error.message.split("\n").length > 1) {
@@ -453,7 +453,7 @@ class UsersController {
       console.log(error.message.split("\n"));
       return response
         .status(status)
-        .json({ msg: "Erro ao criar usuário", cause: error.message });
+        .json({ msg: "Erro ao criar usuário", error: error.message });
     }
   }
 
