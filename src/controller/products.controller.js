@@ -44,7 +44,7 @@ class ProductsController {
       const statusCode = error.errors[0].message.status || 400;
       const message = error.errors[0].message.msg || error.message;
       return response.status(statusCode).send({
-        msg: message,
+        error: message,
       });
     }
   }
