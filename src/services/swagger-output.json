@@ -495,8 +495,7 @@
       "get": {
         "tags": [
           "Sales"
-        ],
-        
+        ],        
         "description": "Obtenha a lista de vendas.",
         "parameters": [
           {
