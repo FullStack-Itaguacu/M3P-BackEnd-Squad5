@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "FarmaSoft API",
-    "description": "FarmaSoft API: Conectando Você ao Mundo dos Medicamentos",
+    "title": "My API",
+    "description": "Description",
     "version": "1.0.0"
   },
   "host": "localhost:3333",
@@ -24,22 +24,19 @@
         "tags": [
           "Users"
         ],
-        "description": "Rota para autenticação de usuário",
+        "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "required":true,
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
-                  "type":"string",
-                  "example": "user@example.com"
+                  "example": "any"
                 },
                 "password": {
-                  "type":"string",
-                  "example": "passWord@123"
+                  "example": "any"
                 }
               }
             }
@@ -63,7 +60,7 @@
         "tags": [
           "Users"
         ],
-        "description": "Rota para registrar um novo usuário.",
+        "description": "",
         "responses": {
           "201": {
             "description": "Created"
@@ -79,7 +76,7 @@
         "tags": [
           "Users"
         ],
-        "description": "Rota para registrar um novo usuário com privilégios de administrador.",
+        "description": "",
         "responses": {
           "201": {
             "description": "Created"
@@ -95,7 +92,7 @@
         "tags": [
           "Buyers"
         ],
-        "description": "Obtenha a lista de compradores com paginação",
+        "description": "",
         "parameters": [
           {
             "name": "offset",
@@ -125,7 +122,7 @@
         "tags": [
           "Buyers"
         ],
-        "description": "Obtenha informações de um comprador pelo ID do usuário",
+        "description": "",
         "parameters": [
           {
             "name": "userId",
@@ -147,7 +144,7 @@
         "tags": [
           "Buyers"
         ],
-        "description": "Atualize informações de um comprador pelo ID.",
+        "description": "",
         "parameters": [
           {
             "name": "userId",
@@ -171,47 +168,45 @@
         "tags": [
           "Products"
         ],
-        "description": "Crie um novo produto (requer autenticação)",
+        "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "required":true,
             "type": "string"
           },
           {
             "name": "body",
             "in": "body",
-            "required":true,
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "Medicine"
+                  "example": "any"
                 },
                 "labName": {
-                  "example": "MedicineLab"
+                  "example": "any"
                 },
                 "imageLink": {
                   "example": "any"
                 },
                 "dosage": {
-                  "example": "123"
+                  "example": "any"
                 },
                 "dosageUnit": {
-                  "example": "mg"
+                  "example": "any"
                 },
                 "description": {
-                  "example": "Description of the medicine"
+                  "example": "any"
                 },
                 "unitPrice": {
-                  "example": "1.23"
+                  "example": "any"
                 },
                 "typeProduct": {
-                  "example": "não controlado"
+                  "example": "any"
                 },
                 "totalStock": {
-                  "example": "123"
+                  "example": "any"
                 }
               }
             }
@@ -233,7 +228,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Obtenha a lista de produtos.",
+        "description": "",
         "responses": {
           "201": {
             "description": "Created"
@@ -249,7 +244,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Obtenha a lista de compradores com paginação",
+        "description": "",
         "parameters": [
           {
             "name": "offset",
@@ -279,7 +274,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Obtenha informações de um produto pelo ID.",
+        "description": "",
         "parameters": [
           {
             "name": "productId",
@@ -306,7 +301,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Obtenha informações de um produto pelo ID (requer autenticação)",
+        "description": "",
         "parameters": [
           {
             "name": "productId",
@@ -328,7 +323,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Atualize informações de um produto pelo ID (requer autenticação)",
+        "description": "",
         "parameters": [
           {
             "name": "productId",
@@ -352,7 +347,7 @@
         "tags": [
           "Sales"
         ],
-        "description": "Crie uma nova venda.",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -366,7 +361,7 @@
         "tags": [
           "Sales"
         ],
-        "description": "Obtenha a lista de vendas.",
+        "description": "",
         "responses": {
           "201": {
             "description": "Created"
@@ -382,7 +377,7 @@
         "tags": [
           "Sales"
         ],
-        "description": "Obtenha a lista de vendas (restrito a administradores).",
+        "description": "",
         "responses": {
           "201": {
             "description": "Created"
@@ -398,7 +393,7 @@
         "tags": [
           "Sales"
         ],
-        "description": "Obtenha dados do painel de controle de ventas (restrito a administradores).",
+        "description": "",
         "responses": {
           "201": {
             "description": "Created"
