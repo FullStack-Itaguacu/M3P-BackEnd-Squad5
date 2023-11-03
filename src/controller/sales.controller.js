@@ -120,7 +120,7 @@ class SalesController {
 
       response
         .status(200)
-        .send({ "total value": totalSales, "total amount": totalAmount });
+        .send({ totalValue: totalSales, totalAmount: totalAmount });
     } catch (error) {
       return response.status(400).send({
         msg: "Erro enviado do banco de dados",
